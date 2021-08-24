@@ -22,17 +22,18 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 
 ### Overview
 
-Viewing party is an application in which users can explore movie options and create a viewing party event for the user and their invited friends during Mod 3 of 4 for Turing School's Back End Engineering Program.
+`Viewing Party` is an application in which users can explore movie options and create a viewing party event for the user and their invited friends, during Mod 3 of 4 for Turing School's Back End Engineering Program.
 
 #### Learning goals and areas of focus consisted of:
 
-- Build a Rails application that requires basic authentication
-- Consume JSON APIs that require authentication
-- Implement a self-referential relationship in ActiveRecord
-- Organize and refactor code to be more maintainable
-- Apply RuboCop’s style guide for code quality
-- Create instance and class methods on a Rails model that use ActiveRecord methods and helpers
-- Write model and feature tests that fully cover data logic and potential user behavior
+- Building a Rails application that requires basic authentication
+- Consuming JSON APIs that require authentication
+- Implementing a self-referential relationship in ActiveRecord
+- Organizing and refactoring code to be more maintainable
+- Applying `RuboCop`’s style guide for code quality
+- Creating instance and class methods on Rails models that use ActiveRecord methods and helpers
+- Writing model and feature tests that fully cover data logic and potential user behavior
+- Utilizing CI/CD via `TravisCI`
 
 ### <ins>Tools Used</ins>
 - Ruby 2.7.2
@@ -41,6 +42,8 @@ Viewing party is an application in which users can explore movie options and cre
 - Postico
 - RSpec
 - Pry
+- RuboCop
+- TravisCI
 - Capybara
 - Launchy
 - Orderly
