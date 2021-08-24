@@ -7,7 +7,12 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter 'app/channels/'
+  add_filter 'app/jobs/'
+  add_filter 'app/mailers/'
+end
+
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

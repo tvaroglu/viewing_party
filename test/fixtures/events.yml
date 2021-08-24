@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  movie_title: MyString
+  event_date: 2021-08-24
+  event_time: 2021-08-24 13:45:16
+  runtime: 1
+  user: one
+
+two:
+  movie_title: MyString
+  event_date: 2021-08-24
+  event_time: 2021-08-24 13:45:16
+  runtime: 1
+  user: two
