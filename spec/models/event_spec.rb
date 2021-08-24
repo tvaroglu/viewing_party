@@ -10,5 +10,7 @@ RSpec.describe Event do
 
   describe 'relationships' do
     it { should belong_to(:user) }
+    it { should have_many(:attendees) }
+    it { should have_many(:users).through(:attendees) }
   end
 end
