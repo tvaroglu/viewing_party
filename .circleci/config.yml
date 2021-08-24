@@ -17,5 +17,4 @@ jobs:
             source $BASH_ENV
             gem install bundler
       - store_test_results:
-          path: /test-results/rspec
-          destination: rspec
+          path: test-results/rspec
