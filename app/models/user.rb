@@ -1,5 +1,5 @@
-class User
-  def hello
-    'world'
-  end
+class User < ApplicationRecord
+  validates :email, uniqueness: true, presence: true
+  has_secure_password
+
 end
