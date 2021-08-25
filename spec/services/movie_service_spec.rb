@@ -7,20 +7,36 @@ RSpec.describe MovieService do
     expect(api.class).to eq(MovieService)
   end
 
-  describe 'Nager Date APIs' do
-    it 'can retrieve the public holidays endpoint for API calls' do
-      expect(MovieService.endpoints[:holidays]).to eq('https://date.nager.at/api/v1/Get/US/2021')
-    end
+  it 'can retrieve endpoints for API calls' do
+    expected = MovieService.endpoints
 
-    it 'can initialize the public holidays endpoint to request a JSON response' do
-      expected = Services::RenderRequest.new(MovieService.endpoints[:holidays])
-      expect(expected.endpoint.class).to eq(String)
-    end
+    expect(expected.class).to eq(Hash)
 
-    xit 'can return a JSON response from the API endpoint' do
-      expected = MovieService.render_request(MovieService.endpoints[:holidays])
-      expect(expected.class).to eq Array
-    end
+    expect(expected[:most_popular].class).to eq(Hash)
+    expect(expected[:most_popular].keys.length).to eq(2)
+    expect(expected[:most_popular].values.length).to eq(2)
+    expect(expected[:most_popular].keys.first).to eq('1-20')
+    expect(expected[:most_popular].keys.last).to eq('21-40')
+  end
+
+  it 'can render API requests via Faraday' do
+    mock_response = "{\"login\":\"tvaroglu\",\"id\":12345678,\"url\":\"https://api.github.com/users/tvaroglu\"}"
+    allow(Faraday).to receive(:get).and_return(mock_response)
+
+    expected = MovieService.render_request(MovieService.endpoints[:most_popular]['1-20'])
+    expect(expected['login']).to eq('tvaroglu')
+  end
+
+  xit 'can return the top 40 most popular movies' do
+    # 1.) Need to stub the 'render_request' method with a mock response
+    # 2.) Need to add expectations to test the helper method (TBD) that aggregates the top 40 movies
+      # Awaiting additional feedback via Slack if anyone found a way to call 40 movies in one request..
+    page_1_endpoint = MovieService.endpoints[:most_popular]['1-20']
+    page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
+
+    page_1_response = MovieService.render_request(page_1_endpoint)
+    page_2_response = MovieService.render_request(page_2_endpoint)
+    require "pry"; binding.pry
   end
 
 end

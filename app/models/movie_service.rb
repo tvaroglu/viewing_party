@@ -5,14 +5,12 @@ require 'date'
 class MovieService
   def initialize; end
 
-  def self.endpoints
-    {
-      holidays: 'https://date.nager.at/api/v1/Get/US/2021'
-    }
-  end
-
   def self.make_request(endpoint)
     Faraday.get(endpoint)
+  end
+
+  def self.endpoints
+    Services::RequestEndpoints.new.endpoints
   end
 
   def self.render_request(endpoint)
