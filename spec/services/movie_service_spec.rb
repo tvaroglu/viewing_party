@@ -4,10 +4,8 @@ RSpec.describe MovieService do
   before :each do
     if Rails.application.credentials.movie_db.nil?
       @api_key = ''
-    else
-      @api_key = Rails.application.credentials.movie_db.values.last
+      allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
     end
-    allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
   end
 
   it 'exists' do
