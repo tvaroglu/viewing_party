@@ -65,14 +65,25 @@ RSpec.describe MovieService do
       expect(page_2_response['results'].length).to eq(20)
     end
 
-    xit 'can return up to 40 movies matching a passed in search criteria' do
-      # endpoints = MovieService.endpoints('Jack+Reacher')[:search]
-      page_1_endpoint = MovieService.endpoints('jack')[:search]['1-20']
-      page_2_endpoint = MovieService.endpoints('jack')[:search]['21-40']
+    it 'can return up to 40 movies matching a passed in search criteria' do
+      @search_criteria = 'jack'
 
-      page_1_response = MovieService.render_request(page_1_endpoint)['results']
-      page_2_response = MovieService.render_request(page_2_endpoint)['results']
-      require "pry"; binding.pry
+      json_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
+      json_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
+      webmock_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1").
+        to_return(status: 200, body: json_blob_page_1)
+      webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
+        to_return(status: 200, body: json_blob_page_2)
+
+      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_1.response.body)
+      page_1_endpoint = MovieService.endpoints(@search_criteria)[:search]['1-20']
+      page_1_response = MovieService.render_request(page_1_endpoint)
+      expect(page_1_response['results'].length).to eq(20)
+
+      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_2.response.body)
+      page_2_endpoint = MovieService.endpoints(@search_criteria)[:search]['21-40']
+      page_2_response = MovieService.render_request(page_2_endpoint)
+      expect(page_2_response['results'].length).to eq(20)
     end
   end
 
