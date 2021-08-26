@@ -26,6 +26,6 @@ RSpec.describe 'welcome index page' do
 
     visit root_path
     click_on "Register"
-    expect(current_path).to eq(new_user_path)
+    expect(current_path).to eq(registration_path)
   end
 end

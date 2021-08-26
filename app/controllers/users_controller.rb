@@ -10,21 +10,22 @@ class UsersController < ApplicationController
     user[:email] = user[:email].downcase
     new_user = User.create(user)
     if new_user.save
-      #if user saves in the db successfully... (happy path)
-      flash[:success] = "Registration complete! Welcome, #{new_user.email}!"
-      # redirect_to user_dashboard_path??
+      redirect_to dashboard_path(new_user.id)
+      flash[:alert] = "Registration complete! Welcome, #{new_user.email}!"
     else
-      #if user fails model validation... (sad path)
-      flash[:failure] = "Oops, couldn't create your account. Please make sure you are using a valid email and password and try again."
-      render :new
+      redirect_to registration_path
+      flash[:alert] = "Oops, couldn't create your account. Please make sure you are using a valid email and password."
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   def authenticate; end
 
-
   private
-
+  
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
