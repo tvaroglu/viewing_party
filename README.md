@@ -127,4 +127,4 @@ Example wireframes to follow are found [here](https://backend.turing.io/module3/
     Use Ctrl-C to stop
     ```
 
-* [Heroku Deployment (link pending)](https://tvaroglu-little-esty-shop.herokuapp.com/), for production
+* [Heroku Deployment](https://t-d-viewing-party.herokuapp.com/), for production
