@@ -18,6 +18,13 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background-image: linear-gradient(white, grey);
+  margin: 0;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  background-attachment: fixed;
+  padding-left: 10px;
 }
 
 main {
