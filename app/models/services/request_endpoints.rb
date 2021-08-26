@@ -5,7 +5,7 @@ module Services
       @api_key = key
     end
 
-    def endpoints
+    def collection
       { most_popular:
         {
           '1-20' => "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1",
