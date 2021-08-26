@@ -27,16 +27,28 @@ RSpec.describe MovieService do
     expect(expected['login']).to eq('tvaroglu')
   end
 
-  xit 'can return the top 40 most popular movies' do
-    # 1.) Need to stub the 'render_request' method with a mock response to keep test light-weight
-    # 2.) Need to add expectations to test the helper method (TBD) that aggregates the top 40 movies
-      # Awaiting additional feedback via Slack if anyone found a way to call 40 movies in one request..
-    page_1_endpoint = MovieService.endpoints[:most_popular]['1-20']
-    page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
+  describe 'helper methods' do
+    xit 'can return the top 40 most popular movies' do
+      # 1.) Need to stub the 'render_request' method with a mock response to keep test light-weight
+      # 2.) Need to add expectations to test the helper method (TBD) that aggregates the top 40 movies
+        # Awaiting additional feedback via Slack if anyone found a way to call 40 movies in one request..
+      page_1_endpoint = MovieService.endpoints[:most_popular]['1-20']
+      page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
 
-    page_1_response = MovieService.render_request(page_1_endpoint)['results']
-    page_2_response = MovieService.render_request(page_2_endpoint)['results']
-    require "pry"; binding.pry
+      page_1_response = MovieService.render_request(page_1_endpoint)['results']
+      page_2_response = MovieService.render_request(page_2_endpoint)['results']
+      require "pry"; binding.pry
+    end
+
+    xit 'can return 40 movies matching a passed in search criteria' do
+      # endpoints = MovieService.endpoints('squad')[:search]
+      page_1_endpoint = MovieService.endpoints('squad')[:search]['1-20']
+      page_2_endpoint = MovieService.endpoints('squad')[:search]['21-40']
+
+      # page_1_response = MovieService.render_request(page_1_endpoint)['results']
+      # page_2_response = MovieService.render_request(page_2_endpoint)['results']
+      require "pry"; binding.pry
+    end
   end
 
 end

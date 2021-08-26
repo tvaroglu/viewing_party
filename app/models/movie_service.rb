@@ -9,8 +9,8 @@ class MovieService
     Faraday.get(endpoint)
   end
 
-  def self.endpoints
-    Services::RequestEndpoints.new.endpoints
+  def self.endpoints(search_criteria = nil)
+    Services::RequestEndpoints.new(search_criteria).endpoints
   end
 
   def self.render_request(endpoint)
