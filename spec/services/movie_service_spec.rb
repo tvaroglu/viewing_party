@@ -7,16 +7,27 @@ RSpec.describe MovieService do
     expect(api.class).to eq(MovieService)
   end
 
-  it 'can retrieve endpoints for API calls' do
-    expected = MovieService.endpoints
+  describe 'endpoints' do
+    it 'can retrieve endpoints for top 40 most popular movies API calls' do
+      expected = MovieService.endpoints[:most_popular]
 
-    expect(expected.class).to eq(Hash)
+      expect(expected.class).to eq(Hash)
 
-    expect(expected[:most_popular].class).to eq(Hash)
-    expect(expected[:most_popular].keys.length).to eq(2)
-    expect(expected[:most_popular].values.length).to eq(2)
-    expect(expected[:most_popular].keys.first).to eq('1-20')
-    expect(expected[:most_popular].keys.last).to eq('21-40')
+      expect(expected.keys.length).to eq(2)
+      expect(expected.values.length).to eq(2)
+      expect(expected.keys.first).to eq('1-20')
+      expect(expected.keys.last).to eq('21-40')
+    end
+    it 'can retrieve endpoints for up to 40 movies matching a search criteria' do
+      expected = MovieService.endpoints[:search]
+
+      expect(expected.class).to eq(Hash)
+
+      expect(expected.keys.length).to eq(2)
+      expect(expected.values.length).to eq(2)
+      expect(expected.keys.first).to eq('1-20')
+      expect(expected.keys.last).to eq('21-40')
+    end
   end
 
   it 'can render API requests via Faraday' do
@@ -41,8 +52,9 @@ RSpec.describe MovieService do
     end
 
     xit 'can return up to 40 movies matching a passed in search criteria' do
-      page_1_endpoint = MovieService.endpoints('Jack+Reacher')[:search]['1-20']
-      page_2_endpoint = MovieService.endpoints('Jack+Reacher')[:search]['21-40']
+      # endpoints = MovieService.endpoints('Jack+Reacher')[:search]
+      page_1_endpoint = MovieService.endpoints('jack')[:search]['1-20']
+      page_2_endpoint = MovieService.endpoints('jack')[:search]['21-40']
 
       page_1_response = MovieService.render_request(page_1_endpoint)['results']
       page_2_response = MovieService.render_request(page_2_endpoint)['results']
