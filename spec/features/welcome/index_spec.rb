@@ -11,8 +11,8 @@ RSpec.describe 'welcome index page' do
     # Button to Log in X
     # Link to Registration X
   it 'can display information about the application' do
-    expect(page).to have_content("Welcome to Viewing Party!")
-    expect(page).to have_content("Viewing Party is an application in which users can explore movie options and create a viewing party event for the user and their invited friends")
+    expect(page).to have_content('Welcome to Viewing Party!')
+    expect(page).to have_content('Viewing Party is an application in which users can explore movie options and create a viewing party event for the user and their invited friends')
   end
 
   it 'can display a button to log in and a link to registration' do

@@ -7,12 +7,11 @@ class UsersController < ApplicationController
 
   def create
     user = user_params
-    user[:username] = user[:username].downcase
+    user[:email] = user[:email].downcase
     new_user = User.create(user)
-
-    if user.save
+    if new_user.save
       #if user saves in the db successfully... (happy path)
-      flash[:success] = "Registration complete! Welcome, #{new_user.username}!"
+      flash[:success] = "Registration complete! Welcome, #{new_user.email}!"
       # redirect_to user_dashboard_path??
     else
       #if user fails model validation... (sad path)

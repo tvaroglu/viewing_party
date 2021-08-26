@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root 'welcome#index'
-  resources :users, only: [:new, :create]
-  get "/registration", to: "users#new" #<--- should we use this
-  get "/login", to: "users#login" #<--- instead of this?
-  post "/login", to: "users#authenticate"
+
+  resources :users, only: [:create]
+  get '/users', to: 'users#new', as: '/registration'
+  get '/users/:id', to: 'users#show', as: '/dashboard'
+
+  get '/login', to: 'users#login'
+  post '/login', to: 'users#authenticate'
 end
