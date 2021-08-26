@@ -1,6 +1,6 @@
 module Services
   class RequestEndpoints
-    def initialize(api_key = '', search_criteria)
+    def initialize(search_criteria, api_key = '')
       @api_key = key
       @search_criteria = search_criteria
     end
@@ -15,7 +15,7 @@ module Services
         search:
         {
           '1-20' => "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&page=1",
-          '21-20' => "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&page=2",
+          '21-40' => "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&page=2"
         }
       }
     end

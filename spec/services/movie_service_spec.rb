@@ -40,13 +40,12 @@ RSpec.describe MovieService do
       require "pry"; binding.pry
     end
 
-    xit 'can return 40 movies matching a passed in search criteria' do
-      # endpoints = MovieService.endpoints('squad')[:search]
-      page_1_endpoint = MovieService.endpoints('squad')[:search]['1-20']
-      page_2_endpoint = MovieService.endpoints('squad')[:search]['21-40']
+    xit 'can return up to 40 movies matching a passed in search criteria' do
+      page_1_endpoint = MovieService.endpoints('Jack+Reacher')[:search]['1-20']
+      page_2_endpoint = MovieService.endpoints('Jack+Reacher')[:search]['21-40']
 
-      # page_1_response = MovieService.render_request(page_1_endpoint)['results']
-      # page_2_response = MovieService.render_request(page_2_endpoint)['results']
+      page_1_response = MovieService.render_request(page_1_endpoint)['results']
+      page_2_response = MovieService.render_request(page_2_endpoint)['results']
       require "pry"; binding.pry
     end
   end
