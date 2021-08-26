@@ -21,7 +21,7 @@ module Services
     private
 
     def key
-      Rails.application.credentials.movie_db.nil? ? '' : Rails.application.credentials.movie_db.values.last
+      Rails.application.credentials.movie_db.values.last
     end
   end
 end

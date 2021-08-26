@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe MovieService do
+  before :each do
+    if Rails.application.credentials.movie_db.nil?
+      key = ''
+      allow_any_instance_of(RequestEndpoints).to receive(:key).and_return(key)
+    end
+  end
+
   it 'exists' do
     api = MovieService.new
 
