@@ -1,22 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe MovieService do
+  before :each do
+    if Rails.application.credentials.movie_db.nil?
+      @api_key = ''
+      allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
+    end
+  end
+
   it 'exists' do
     api = MovieService.new
 
     expect(api.class).to eq(MovieService)
   end
 
-  it 'can retrieve endpoints for API calls' do
-    expected = MovieService.endpoints
+  describe 'endpoints' do
+    it 'can retrieve endpoints for top 40 most popular movies API calls' do
+      expected = MovieService.endpoints[:most_popular]
 
-    expect(expected.class).to eq(Hash)
+      expect(expected.class).to eq(Hash)
 
-    expect(expected[:most_popular].class).to eq(Hash)
-    expect(expected[:most_popular].keys.length).to eq(2)
-    expect(expected[:most_popular].values.length).to eq(2)
-    expect(expected[:most_popular].keys.first).to eq('1-20')
-    expect(expected[:most_popular].keys.last).to eq('21-40')
+      expect(expected.keys.length).to eq(2)
+      expect(expected.values.length).to eq(2)
+      expect(expected.keys.first).to eq('1-20')
+      expect(expected.keys.last).to eq('21-40')
+    end
+    it 'can retrieve endpoints for up to 40 movies matching a search criteria' do
+      expected = MovieService.endpoints[:search]
+
+      expect(expected.class).to eq(Hash)
+
+      expect(expected.keys.length).to eq(2)
+      expect(expected.values.length).to eq(2)
+      expect(expected.keys.first).to eq('1-20')
+      expect(expected.keys.last).to eq('21-40')
+    end
   end
 
   it 'can render API requests via Faraday' do
@@ -28,26 +46,44 @@ RSpec.describe MovieService do
   end
 
   describe 'helper methods' do
-    xit 'can return the top 40 most popular movies' do
-      # 1.) Need to stub the 'render_request' method with a mock response to keep test light-weight
-      # 2.) Need to add expectations to test the helper method (TBD) that aggregates the top 40 movies
-        # Awaiting additional feedback via Slack if anyone found a way to call 40 movies in one request..
-      page_1_endpoint = MovieService.endpoints[:most_popular]['1-20']
-      page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
+    it 'can return the top 40 most popular movies' do
+      json_blob_page_1 = File.read('./spec/fixtures/most_popular/most_popular_page_1_response.json')
+      json_blob_page_2 = File.read('./spec/fixtures/most_popular/most_popular_page_2_response.json')
+      webmock_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1").
+        to_return(status: 200, body: json_blob_page_1)
+      webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
+        to_return(status: 200, body: json_blob_page_2)
 
-      page_1_response = MovieService.render_request(page_1_endpoint)['results']
-      page_2_response = MovieService.render_request(page_2_endpoint)['results']
-      require "pry"; binding.pry
+      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_1.response.body)
+      page_1_endpoint = MovieService.endpoints[:most_popular]['1-20']
+      page_1_response = MovieService.render_request(page_1_endpoint)
+      expect(page_1_response['results'].length).to eq(20)
+
+      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_2.response.body)
+      page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
+      page_2_response = MovieService.render_request(page_2_endpoint)
+      expect(page_2_response['results'].length).to eq(20)
     end
 
-    xit 'can return 40 movies matching a passed in search criteria' do
-      # endpoints = MovieService.endpoints('squad')[:search]
-      page_1_endpoint = MovieService.endpoints('squad')[:search]['1-20']
-      page_2_endpoint = MovieService.endpoints('squad')[:search]['21-40']
+    it 'can return up to 40 movies matching a passed in search criteria' do
+      @search_criteria = 'jack'
 
-      # page_1_response = MovieService.render_request(page_1_endpoint)['results']
-      # page_2_response = MovieService.render_request(page_2_endpoint)['results']
-      require "pry"; binding.pry
+      json_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
+      json_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
+      webmock_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1").
+        to_return(status: 200, body: json_blob_page_1)
+      webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
+        to_return(status: 200, body: json_blob_page_2)
+
+      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_1.response.body)
+      page_1_endpoint = MovieService.endpoints(@search_criteria)[:search]['1-20']
+      page_1_response = MovieService.render_request(page_1_endpoint)
+      expect(page_1_response['results'].length).to eq(20)
+
+      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_2.response.body)
+      page_2_endpoint = MovieService.endpoints(@search_criteria)[:search]['21-40']
+      page_2_response = MovieService.render_request(page_2_endpoint)
+      expect(page_2_response['results'].length).to eq(20)
     end
   end
 

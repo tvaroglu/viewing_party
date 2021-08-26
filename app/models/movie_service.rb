@@ -10,7 +10,7 @@ class MovieService
   end
 
   def self.endpoints(search_criteria = nil)
-    Services::RequestEndpoints.new(search_criteria).endpoints
+    Services::RequestEndpoints.new(search_criteria).collection
   end
 
   def self.render_request(endpoint)
