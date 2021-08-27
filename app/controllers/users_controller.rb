@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       flash[:alert] = "New account successfully created for: #{new_user.email}!"
     else
       redirect_to registration_path
-      flash[:alert] = "Invalid credentials, please try again."
+      flash[:alert] = 'Invalid credentials, please try again.'
     end
   end
 

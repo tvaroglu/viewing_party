@@ -8,15 +8,14 @@ class SessionsController < ApplicationController
       flash[:alert] = "Welcome, #{found_user.email}!"
       redirect_to dashboard_path(found_user.id)
     else
-      flash[:alert] = "Invalid credentials, please try again."
+      flash[:alert] = 'Invalid credentials, please try again.'
       render :new
     end
   end
 
   def destroy
     session[:user_id] = nil
-    flash[:alert] = "You are now logged out."
+    flash[:alert] = 'You are now logged out, please come back soon!'
     redirect_to root_path
   end
-
 end

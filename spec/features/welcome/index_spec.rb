@@ -15,17 +15,17 @@ RSpec.describe 'welcome index page' do
     expect(page).to have_content('Viewing Party is an application in which users can explore movie options and create a viewing party event for the user and their invited friends')
   end
 
-  it 'can display a button to log in and a link to registration' do
-    expect(page).to have_link("Log In")
-    expect(page).to have_link("Register")
+  it 'can display a button to log in and a link to new user registration' do
+    expect(page).to have_link('Log In')
+    expect(page).to have_link('New User Registration')
   end
 
   it 'links the users to log-in and register' do
-    click_on "Log In"
+    click_on 'Log In'
     expect(current_path).to eq(login_path)
 
     visit root_path
-    click_on "Register"
+    click_on 'New User Registration'
     expect(current_path).to eq(registration_path)
   end
 end
