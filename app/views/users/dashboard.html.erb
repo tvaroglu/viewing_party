@@ -1,6 +1,9 @@
 <br>
 <%= link_to "Home", root_path %>
 <h1><%= "Welcome, #{@user.email}!" %></h1>
+<%= link_to "Discover Movies", discover_path %>
+<br>
+<br>
 <%= form_with url: dashboard_path(@user.id), local: true do |form| %>
   <%= form.label :find_friends, 'Find Friends:' %>
   <%= form.text_field :email, id: :email %>
@@ -16,3 +19,23 @@
     </div>
   <% end %>
 <% end %>
+<br>
+<br>
+<!-- <h3>Viewing Parties</h3> -->
+<table style="font-family:Quicksand;">
+  <thead text-align="center" align="center">
+    <tr>
+      <th colspan="2">Viewing Parties</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th style="padding-right:200px;">My Parties:</th>
+      <th>Parties I'm Invited To:</th>
+    </tr>
+    <tr>
+      <td style="padding-right:200px;"></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
