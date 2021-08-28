@@ -14,4 +14,21 @@ RSpec.describe User do
     it { should have_many(:following_users) }
     it { should have_many(:followers).through(:following_users) }
   end
+
+  describe 'methods' do
+    before :each do
+      @taylor = User.create!(email: 'foo@bar.com', password: 'test')
+      @dane = User.create!(email: 'boo@far.com', password: 'nico')
+      @admin = User.create!(email: 'admin@example.com', password: 'guest')
+    end
+
+    it 'can return following users' do
+      expect(@admin.followers).to eq([])
+
+      @admin.followers << @taylor
+      @admin.followers << @dane
+      
+      expect(@admin.followers).to eq([@taylor, @dane])
+    end
+  end
 end
