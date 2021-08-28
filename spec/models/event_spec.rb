@@ -33,11 +33,11 @@ RSpec.describe Event do
     end
 
     it 'can return the formatted date and time for the event' do
-      allow(Date).to receive(:today).and_return('2021-08-28'.to_date)
-      allow(Time).to receive(:now).and_return('2021-08-28 16:25:18 -0600'.to_time)
+      date = '2021-08-28'.to_date
+      time = '2021-08-28 16:25:18 -0600'.to_time
 
-      expect(ApplicationRecord.format_date(Date.today)).to eq('Saturday, August 28, 2021')
-      expect(ApplicationRecord.format_time(Time.now)).to eq('04:25 PM')
+      expect(ApplicationRecord.format_date(date)).to eq('Saturday, August 28, 2021')
+      expect(ApplicationRecord.format_time(time)).to eq('04:25 PM')
     end
   end
 end
