@@ -20,22 +20,21 @@
   <% end %>
 <% end %>
 <br>
-<br>
-<!-- <h3>Viewing Parties</h3> -->
-<table style="font-family:Quicksand;">
+<h2>Viewing Parties</h2>
+<table style="font-family:Trebuchet;">
   <thead text-align="center" align="center">
     <tr>
-      <th colspan="2">Viewing Parties</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th style="padding-right:200px;">My Parties:</th>
-      <th>Parties I'm Invited To:</th>
-    </tr>
-    <tr>
-      <td style="padding-right:200px;"></td>
-      <td></td>
+      <td style="padding-right:100px;">
+        <%= render partial: 'parties', locals: { host: true} %>
+      </td>
+      <td>
+        <%= render partial: 'parties', locals: { host: false} %>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -7,8 +7,8 @@ RSpec.describe User do
   end
 
   describe 'relationships' do
-    it { should have_many(:attendees) }
-    it { should have_many(:events).through(:attendees) }
+    it { should have_many(:events) }
+    it { should have_many(:attendees).through(:events) }
     it { should have_many(:followed_users) }
     it { should have_many(:followees).through(:followed_users) }
     it { should have_many(:following_users) }

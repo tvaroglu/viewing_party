@@ -6,4 +6,8 @@ class Event < ApplicationRecord
   belongs_to :user
   has_many :attendees, dependent: :destroy
   has_many :users, through: :attendees
+
+  def host
+    user.email
+  end
 end

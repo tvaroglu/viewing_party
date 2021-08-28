@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   has_secure_password
-  has_many :attendees, dependent: :destroy
-  has_many :events, through: :attendees
+  has_many :events, dependent: :destroy
+  has_many :attendees, through: :events
   # 8/24: Rubocop offense: including :inverse_of
   # app/models/user.rb:6:3: C: Rails/InverseOf: Specify an :inverse_of option.
   # has_many :followed_users, foreign_key: :follower_id, class_name: 'Friendship'

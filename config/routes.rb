@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   # placeholder, add route once page built
   get '/discover', to: 'welcome#index'
+  # placeholder, add route once page built
+  get '/movie/:movie_name', to: 'users#dashboard', as: '/movie'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
