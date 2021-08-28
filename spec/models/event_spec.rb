@@ -19,11 +19,14 @@ RSpec.describe Event do
       @taylor = User.create!(email: 'foo@bar.com', password: 'test')
       @dane = User.create!(email: 'boo@far.com', password: 'nico')
       @admin = User.create!(email: 'admin@example.com', password: 'guest')
+
+      allow(Date).to receive(:today).and_return('2021-08-28'.to_date)
+      allow(Time).to receive(:now).and_return('2021-08-28 17:17:00 -0600'.to_time)
       @event = Event.create!(
         user: @taylor,
         movie_title: 'Kangaroo Jack',
         event_date: Date.today,
-        event_time: Time.now + 120,
+        event_time: Time.now,
         runtime: 90
       )
     end
@@ -33,11 +36,8 @@ RSpec.describe Event do
     end
 
     it 'can return the formatted date and time for the event' do
-      date = '2021-08-28'.to_date
-      time = '2021-08-28 16:25:18 -0600'.to_time
-
-      expect(ApplicationRecord.format_date(date)).to eq('Saturday, August 28, 2021')
-      expect(ApplicationRecord.format_time(time)).to eq('04:25 PM')
+      expect(ApplicationRecord.format_date(@event.event_date)).to eq('Saturday, August 28, 2021')
+      expect(ApplicationRecord.format_time(@event.event_time)).to eq(ApplicationRecord.format_time(Time.now))
     end
   end
 end
