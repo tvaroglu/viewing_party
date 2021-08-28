@@ -13,4 +13,13 @@ class User < ApplicationRecord
   # has_many :following_users, foreign_key: :followee_id, class_name: 'Friendship'
   has_many :following_users, foreign_key: :followee_id, class_name: 'Friendship', dependent: :destroy
   has_many :followers, through: :following_users
+
+  def has_friends?
+    followers.count > 0
+  end
+
+  def already_friends_with?(user_id)
+    !followers.where(id: user_id).empty?
+  end
+
 end

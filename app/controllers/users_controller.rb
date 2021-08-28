@@ -20,6 +20,19 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def search
+    found_user = User.find_by(email: params[:email].downcase)
+    if !found_user.nil? && !current_user.already_friends_with?(found_user.id)
+      current_user.followers << found_user
+      flash[:alert] = "#{found_user.email} is now following you!"
+    elsif !found_user.nil? && current_user.already_friends_with?(found_user.id)
+      flash[:alert] = "#{found_user.email} is already following you!"
+    else
+      flash[:alert] = "Sorry, unable to find an account for \"#{params[:email]}\""
+    end
+    redirect_to dashboard_path(current_user.id)
+  end
+
   private
 
   def user_params

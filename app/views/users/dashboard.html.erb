@@ -1,2 +1,18 @@
+<br>
 <%= link_to "Home", root_path %>
 <h1><%= "Welcome, #{@user.email}!" %></h1>
+<%= form_with url: dashboard_path(@user.id), local: true do |form| %>
+  <%= form.label :find_friends, 'Find Friends:' %>
+  <%= form.text_field :email, id: :email %>
+  <%= form.submit 'Search' %>
+<% end %>
+<% if !@user.has_friends? %>
+  <h3>You Have No Followers</h3>
+<% else %>
+  <h3>All Followers:</h3>
+  <% @user.followers.each do |follower| %>
+    <div id="follower-<%= follower.id %>">
+      <p><%= follower.email %></p>
+    </div>
+  <% end %>
+<% end %>
