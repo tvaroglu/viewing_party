@@ -35,8 +35,15 @@ RSpec.describe Event do
       expect(@event.host).to eq(@taylor.email)
     end
 
+    it 'can return events a user is invited to' do
+      Attendee.create!(user: @taylor, event: @event)
+      Attendee.create!(user: @dane, event: @event)
+
+      expect(User.events_invited_to(@dane.id)).to eq([@event])
+    end
+
     it 'can return the formatted date and time for the event' do
-      expect(ApplicationRecord.format_date(@event.event_date)).to eq('Saturday, August 28, 2021')
+      expect(ApplicationRecord.format_date(@event.event_date)).to eq('August 28, 2021')
       expect(ApplicationRecord.format_time(@event.event_time)).to eq(ApplicationRecord.format_time(Time.now))
     end
   end

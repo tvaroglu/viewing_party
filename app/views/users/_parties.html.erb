@@ -1,10 +1,7 @@
 <% if host %>
   <% events = current_user.events %>
-  <h3>My Parties:</h3>
 <% else %>
-  <!-- PLACEHOLDER variable: Need helper method for events user is invited to -->
-  <% events = current_user.events %>
-  <h3>Parties I'm Invited To:</h3>
+  <% events = User.events_invited_to(current_user.id) %>
 <% end %>
 <% events.each do |event| %>
   <h4>Event Details:</h4>

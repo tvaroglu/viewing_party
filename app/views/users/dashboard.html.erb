@@ -9,7 +9,7 @@
   <%= form.text_field :email, id: :email %>
   <%= form.submit 'Search' %>
 <% end %>
-<% if !@user.has_friends? %>
+<% if !@user.friends? %>
   <h3>You Have No Followers</h3>
 <% else %>
   <h3>All Followers:</h3>
@@ -22,17 +22,23 @@
 <br>
 <h2>Viewing Parties</h2>
 <table style="font-family:Trebuchet;">
-  <thead text-align="center" align="center">
+  <thead>
     <tr>
       <th colspan="2"></th>
+    </tr>
+    <tr>
+      <td style="padding-right:150px;">
+        <h3>My Parties:</h3>
+      </td>
+      <td><h3>Parties I'm Invited To:</h3></td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="padding-right:100px;">
+      <td style="vertical-align:text-top;">
         <%= render partial: 'parties', locals: { host: true} %>
       </td>
-      <td>
+      <td style="vertical-align:text-top;">
         <%= render partial: 'parties', locals: { host: false} %>
       </td>
     </tr>

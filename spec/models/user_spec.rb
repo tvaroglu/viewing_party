@@ -24,7 +24,7 @@ RSpec.describe User do
 
     it 'can return following users' do
       expect(@admin.followers).to eq([])
-      expect(@admin.has_friends?).to be false
+      expect(@admin.friends?).to be false
       expect(@admin.already_friends_with?(@taylor.id)).to be false
       expect(@admin.already_friends_with?(@dane.id)).to be false
 
@@ -32,7 +32,7 @@ RSpec.describe User do
       @admin.followers << @dane
 
       expect(@admin.followers).to eq([@taylor, @dane])
-      expect(@admin.has_friends?).to be true
+      expect(@admin.friends?).to be true
       expect(@admin.already_friends_with?(@taylor.id)).to be true
       expect(@admin.already_friends_with?(@dane.id)).to be true
     end
