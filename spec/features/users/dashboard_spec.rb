@@ -65,4 +65,99 @@ RSpec.describe 'user dashboard page' do
     end
   end
 
+  describe 'viewing parties section' do
+    before :each do
+      @event_1 = Event.create!(
+        user: @taylor,
+        movie_title: 'Kangaroo Jack',
+        event_date: '2021-08-29'.to_date,
+        event_time: '2021-08-29 11:30:35 -0600'.to_time,
+        runtime: 90
+      )
+      # event 1 hosted by Taylor, Taylor and Admin invited
+      @attendee_1 = Attendee.create!(user: @taylor, event: @event_1)
+      @attendee_2 = Attendee.create!(user: @admin, event: @event_1)
+
+      visit dashboard_path(@admin.id)
+    end
+    # As an authenticated user,
+    # I should see the viewing parties I have been invited to with the following details:
+      # Movie Title, which links to the movie show page
+      # Date and Time of Event
+      # who is hosting the event
+      # list of friends invited, with my name in bold
+    #
+    # I should also see the viewing parties that I have created with the following details:
+      # Movie Title, which links to the movie show page
+      # Date and Time of Event
+      # That I am the host of the party
+      # List of friends invited to the viewing party
+    it 'displays a section for viewing parties the user is invited to' do
+      expect(page).to have_content('My Parties:')
+      expect(page).to have_content("Parties I'm Invited To:")
+      # save_and_open_page
+      within "#event-#{@event_1.id}" do
+        expect(page).to have_content('Event Details')
+        expect(page).to have_content("Event Host: #{@event_1.host}")
+        expect(page).to have_content("Event Name: #{@event_1.movie_title}")
+        expect(page).to have_content("Event Date: #{ApplicationRecord.format_date(@event_1.event_date)}")
+        expect(page).to have_content("Event Time: #{ApplicationRecord.format_time(@event_1.event_time)}")
+        expect(page).to have_content('Attendees:')
+      end
+      within "#attendee-#{@attendee_1.id}" do
+        expect(page).to have_content(@attendee_1.user_email)
+      end
+      within "#attendee-#{@attendee_2.id}" do
+        expect(page).to have_content(@attendee_2.user_email)
+      end
+    end
+
+    it 'displays a section for viewing parties the user is hosting' do
+      event_2 = Event.create!(
+        user: @dane,
+        movie_title: 'The Terminator',
+        event_date: '2021-08-28'.to_date,
+        event_time: '2021-08-28 21:40:05 -0600'.to_time,
+        runtime: 100
+      )
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@dane)
+
+      # event 2 hosted by Dane, Admin and Dane invited
+      attendee_3 = Attendee.create!(user: @admin, event: event_2)
+      attendee_4 = Attendee.create!(user: @dane, event: event_2)
+
+      visit dashboard_path(@dane.id)
+      # save_and_open_page
+      within "#event-#{event_2.id}" do
+        expect(page).to have_content('Event Details')
+        expect(page).to have_content("Event Host: #{event_2.host}")
+        expect(page).to have_content("Event Name: #{event_2.movie_title}")
+        expect(page).to have_content("Event Date: #{ApplicationRecord.format_date(event_2.event_date)}")
+        expect(page).to have_content("Event Time: #{ApplicationRecord.format_time(event_2.event_time)}")
+        expect(page).to have_content('Attendees:')
+      end
+      within "#attendee-#{attendee_3.id}" do
+        expect(page).to have_content(attendee_3.user_email)
+      end
+      within "#attendee-#{attendee_4.id}" do
+        expect(page).to have_content(attendee_4.user_email)
+      end
+    end
+
+    # temporarily skipped, assertion will be updated once page is built and route modified accordingly
+    xit 'links to the movie show page' do
+      # save_and_open_page
+      within "#event-#{@event_1.id}" do
+        click_on @event_1.movie_title
+        expect(current_path).to eq(movie_path(@admin.id))
+      end
+    end
+
+    # temporarily skipped, assertion will be updated once page is built and route modified accordingly
+    xit 'links to the discover page' do
+      # save_and_open_page
+      click_on 'Discover Movies'
+      expect(current_path).to eq(discover_path)
+    end
+  end
 end

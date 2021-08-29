@@ -4,14 +4,19 @@
   <% events = User.events_invited_to(current_user.id) %>
 <% end %>
 <% events.each do |event| %>
-  <h4>Event Details:</h4>
-  <p>Event Host: <strong><%= event.host %></strong></p>
-  <p>Event Name: <%= link_to "#{event.movie_title}", movie_path(current_user.id) %></p>
-  <p><%= "Event Date: #{ApplicationRecord.format_date(event.event_date)}" %></p>
-  <p><%= "Event Time: #{ApplicationRecord.format_time(event.event_time)}" %></p>
-  <h4>Attendees:</h4>
-  <% event.attendees.each_with_index do |attendee, idx| %>
-    <p><%= "#{idx + 1}.) #{attendee.user_email}" %></p>
-  <% end %>
-  <br>
+  <div id="event-<%= event.id %>">
+    <h4>Event Details:</h4>
+    <p>Event Host: <strong><%= event.host %></strong></p>
+    <!-- Placeholder for path helper - need to add in real route when page is built -->
+    <p>Event Name: <%= link_to "#{event.movie_title}", movie_path(current_user.id) %></p>
+    <p><%= "Event Date: #{ApplicationRecord.format_date(event.event_date)}" %></p>
+    <p><%= "Event Time: #{ApplicationRecord.format_time(event.event_time)}" %></p>
+    <h4>Attendees:</h4>
+    <% event.attendees.each_with_index do |attendee, idx| %>
+      <p id="attendee-<%= attendee.id %>">
+        <%= "#{idx + 1}.) #{attendee.user_email}" %>
+      </p>
+    <% end %>
+    <br>
+  </div>
 <% end %>
