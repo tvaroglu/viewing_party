@@ -1,15 +1,20 @@
 <% if host %>
   <% events = current_user.events %>
-  <h3>My Parties</h3>
+  <h3>My Parties:</h3>
 <% else %>
   <!-- PLACEHOLDER variable: Need helper method for events user is invited to -->
   <% events = current_user.events %>
-  <h3>Parties I'm Invited To</h3>
+  <h3>Parties I'm Invited To:</h3>
 <% end %>
 <% events.each do |event| %>
+  <h4>Event Details:</h4>
   <p>Event Host: <strong><%= event.host %></strong></p>
   <p>Event Name: <%= link_to "#{event.movie_title}", movie_path(current_user.id) %></p>
   <p><%= "Event Date: #{ApplicationRecord.format_date(event.event_date)}" %></p>
   <p><%= "Event Time: #{ApplicationRecord.format_time(event.event_time)}" %></p>
+  <h4>Attendees:</h4>
+  <% event.attendees.each_with_index do |attendee, idx| %>
+    <p><%= "#{idx + 1}.) #{attendee.user_email}" %></p>
+  <% end %>
   <br>
 <% end %>
