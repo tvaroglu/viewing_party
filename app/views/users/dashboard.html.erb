@@ -1,0 +1,45 @@
+<h1><%= "Welcome, #{@user.email}!" %></h1>
+<!-- Placeholder for path helper - need to add in real route when page is built -->
+<%= link_to "Discover Movies", discover_path %>
+<br>
+<br>
+<%= form_with url: dashboard_path(@user.id), local: true do |form| %>
+  <%= form.label :find_friends, 'Find Friends:' %>
+  <%= form.text_field :email, id: :email %>
+  <%= form.submit 'Search' %>
+<% end %>
+<% if !@user.friends? %>
+  <h3>You Have No Followers</h3>
+<% else %>
+  <h3>All Followers:</h3>
+  <% @user.followers.each do |follower| %>
+    <div id="follower-<%= follower.id %>">
+      <p><%= follower.email %></p>
+    </div>
+  <% end %>
+<% end %>
+<br>
+<h2>Viewing Parties</h2>
+<table>
+  <thead>
+    <tr>
+      <th colspan="2"></th>
+    </tr>
+    <tr>
+      <td style="padding-right:150px;">
+        <h3>My Parties:</h3>
+      </td>
+      <td><h3>Parties I'm Invited To:</h3></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="vertical-align:text-top;">
+        <%= render partial: 'parties', locals: { host: true} %>
+      </td>
+      <td style="vertical-align:text-top;">
+        <%= render partial: 'parties', locals: { host: false} %>
+      </td>
+    </tr>
+  </tbody>
+</table>

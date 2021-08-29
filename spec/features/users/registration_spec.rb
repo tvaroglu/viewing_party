@@ -28,7 +28,7 @@ RSpec.describe 'user registration page' do
     expect(page).to have_content("New account successfully created for: #{@email}!")
   end
 
-  it 'redirects back to registration page if fails model validation' do
+  it 'redirects back to registration page upon failed model validation' do
     expect(page).to have_content('Email:')
     expect(page).to have_content('Password:')
     expect(page).to have_content('Confirm Password:')

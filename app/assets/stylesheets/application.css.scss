@@ -14,17 +14,17 @@
  *= require_self
  */
 
-body {
+@import url('https://fonts.googleapis.com/css?family=Parisienne|Quicksand&display=swap');
+html, body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-image: linear-gradient(white, grey);
+  background-image: linear-gradient(white, gold);
   margin: 0;
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: contain;
   background-attachment: fixed;
-  padding-left: 10px;
 }
 
 main {
