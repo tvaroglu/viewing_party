@@ -11,7 +11,7 @@ module Services
       @attributes_hash[:id] = @id
       @attributes_hash[:title] = @title
       @attributes_hash[:vote_average] = @vote_average
-      return @attributes_hash
+      @attributes_hash
     end
   end
 end
