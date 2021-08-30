@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   def discover
     if params[:format]
-      @search_results = MovieService.search_results(params[:format])
+      @results = MovieService.search_results(params[:format])
     end
   end
 
@@ -10,5 +10,7 @@ class MoviesController < ApplicationController
     redirect_to discover_path(search_criteria)
   end
 
-  def most_popular; end
+  def most_popular
+    @results = MovieService.most_popular
+  end
 end

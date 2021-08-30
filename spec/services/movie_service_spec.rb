@@ -63,6 +63,8 @@ RSpec.describe MovieService do
       page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
       page_2_response = MovieService.render_request(page_2_endpoint)
       expect(page_2_response['results'].length).to eq(20)
+
+      expect(MovieService.most_popular.length).to eq(40)
     end
 
     it 'can return up to 40 movies matching a passed in search criteria' do

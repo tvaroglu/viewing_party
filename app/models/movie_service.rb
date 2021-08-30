@@ -17,6 +17,10 @@ class MovieService
     Services::RenderRequest.new(endpoint).parse
   end
 
+  def self.most_popular
+    Services::MostPopular.new.results
+  end
+
   def self.search_results(search_criteria)
     Services::SearchResults.new(search_criteria).results
   end
