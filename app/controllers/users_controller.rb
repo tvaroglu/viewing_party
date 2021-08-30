@@ -8,7 +8,8 @@ class UsersController < ApplicationController
     user[:email] = user[:email].downcase
     new_user = User.create(user)
     if new_user.save
-      redirect_to root_path
+      session[:user_id] = new_user.id
+      redirect_to dashboard_path(new_user.id)
       flash[:alert] = "New account successfully created for: #{new_user.email}!"
     else
       redirect_to registration_path
