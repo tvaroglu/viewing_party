@@ -85,6 +85,19 @@ RSpec.describe MovieService do
       page_2_response = MovieService.render_request(page_2_endpoint)
       expect(page_2_response['results'].length).to eq(20)
     end
+
+    it 'can movies details for a specific movie' do
+      @movie_id = 75780
+
+      json_blob = File.read('./spec/fixtures/movie_details.json')
+      webmock_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}").
+        to_return(status: 200, body: json_blob)
+
+      allow(MovieService).to receive(:make_request).and_return(webmock_request.response.body)
+      request_endpoint = MovieService.endpoints('', @movie_id)[:details]
+      response = MovieService.render_request(request_endpoint)
+      expect(response.class).to eq(Hash)
+    end
   end
 
 end
