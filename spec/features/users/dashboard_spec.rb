@@ -4,10 +4,7 @@ RSpec.describe 'user dashboard page' do
   before :each do
     @taylor = User.create!(email: 'foo@bar.com', password: 'test')
     @dane = User.create!(email: 'boo@far.com', password: 'nico')
-    @admin = User.create!(email: 'admin@example.com', password: 'guest')
-
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
-
+    # @admin = User.create!(email: 'admin@example.com', password: 'guest')
     visit dashboard_path(@admin.id)
   end
   # As an authenticated user,
@@ -94,14 +91,14 @@ RSpec.describe 'user dashboard page' do
       # List of friends invited to the viewing party
     it 'displays a section for viewing parties the user is invited to' do
       expect(page).to have_content('My Parties:')
-      expect(page).to have_content("Parties I'm Invited To:")
+      expect(page).to have_content("Invited To:")
       # save_and_open_page
       within "#event-#{@event_1.id}" do
         expect(page).to have_content('Event Details')
-        expect(page).to have_content("Event Host: #{@event_1.host}")
-        expect(page).to have_content("Event Name: #{@event_1.movie_title}")
-        expect(page).to have_content("Event Date: #{ApplicationRecord.format_date(@event_1.event_date)}")
-        expect(page).to have_content("Event Time: #{ApplicationRecord.format_time(@event_1.event_time)}")
+        expect(page).to have_content("Host: #{@event_1.host}")
+        expect(page).to have_content("Movie: #{@event_1.movie_title}")
+        expect(page).to have_content("Date: #{ApplicationRecord.format_date(@event_1.event_date)}")
+        expect(page).to have_content("Time: #{ApplicationRecord.format_time(@event_1.event_time)}")
         expect(page).to have_content('Attendees:')
       end
       within "#attendee-#{@attendee_1.id}" do
@@ -130,10 +127,10 @@ RSpec.describe 'user dashboard page' do
       # save_and_open_page
       within "#event-#{event_2.id}" do
         expect(page).to have_content('Event Details')
-        expect(page).to have_content("Event Host: #{event_2.host}")
-        expect(page).to have_content("Event Name: #{event_2.movie_title}")
-        expect(page).to have_content("Event Date: #{ApplicationRecord.format_date(event_2.event_date)}")
-        expect(page).to have_content("Event Time: #{ApplicationRecord.format_time(event_2.event_time)}")
+        expect(page).to have_content("Host: #{event_2.host}")
+        expect(page).to have_content("Movie: #{event_2.movie_title}")
+        expect(page).to have_content("Date: #{ApplicationRecord.format_date(event_2.event_date)}")
+        expect(page).to have_content("Time: #{ApplicationRecord.format_time(event_2.event_time)}")
         expect(page).to have_content('Attendees:')
       end
       within "#attendee-#{attendee_3.id}" do

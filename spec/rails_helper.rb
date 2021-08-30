@@ -45,6 +45,10 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  config.before(:each, :type => :feature) do
+    @admin = User.create!(email: 'admin@example.com', password: 'guest')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+  end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
