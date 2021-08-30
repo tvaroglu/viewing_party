@@ -8,7 +8,7 @@
     <h4 class="card-header">Event Details:</h4>
     <p class="card-header">Host: <strong><%= event.host %></strong></p>
     <!-- Placeholder for path helper - need to add in real route when page is built -->
-    <p style="padding-top:10px;">Movie: <%= link_to "#{event.movie_title}", movie_path(current_user.id) %></p>
+    <p style="padding-top:20px;">Movie: <%= link_to "#{event.movie_title}", movie_path(current_user.id) %></p>
     <p><%= "Date: #{ApplicationRecord.format_date(event.event_date)}" %></p>
     <p><%= "Time: #{ApplicationRecord.format_time(event.event_time)}" %></p>
     <h4 class="card-footer">Attendees:</h4>

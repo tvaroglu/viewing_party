@@ -16,4 +16,8 @@ class MovieService
   def self.render_request(endpoint)
     Services::RenderRequest.new(endpoint).parse
   end
+
+  def self.search_results(search_criteria)
+    Services::SearchResults.new(search_criteria).results
+  end
 end

@@ -84,9 +84,11 @@ RSpec.describe MovieService do
       page_2_endpoint = MovieService.endpoints(@search_criteria)[:search]['21-40']
       page_2_response = MovieService.render_request(page_2_endpoint)
       expect(page_2_response['results'].length).to eq(20)
+
+      expect(MovieService.search_results(@search_results).length).to eq(40)
     end
 
-    it 'can movies details for a specific movie' do
+    it 'can return movies details for a specific movie' do
       @movie_id = 75780
 
       json_blob = File.read('./spec/fixtures/movie_details.json')

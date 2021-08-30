@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'users#dashboard'
   post '/dashboard', to: 'users#search'
 
-  # placeholder, add route once page built
-  get '/discover', to: 'welcome#index'
+  get '/discover', to: 'movies#discover'
+  post '/discover', to: 'movies#search'
+  get '/popular', to: 'movies#top_rated'
   # placeholder, add route once page built
   get '/movie/:movie_name', to: 'users#dashboard', as: '/movie'
 

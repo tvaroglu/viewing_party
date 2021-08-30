@@ -14,7 +14,7 @@
  *= require_self
  */
 
-@import url('https://fonts.googleapis.com/css?family=Parisienne|Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Acme');
 html, body {
   display: flex;
   min-height: 100vh;
@@ -25,7 +25,8 @@ html, body {
   background-position: bottom;
   background-size: contain;
   background-attachment: fixed;
-  font-family: Quicksand;
+  font-family: 'Acme';font-size: 22px;
+  // font-family: Quicksand;
 }
 
 main {
