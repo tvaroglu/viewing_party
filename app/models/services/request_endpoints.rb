@@ -1,12 +1,14 @@
 module Services
   class RequestEndpoints
-    def initialize(search_criteria, api_key = '')
+    def initialize(search_criteria, movie_id)
       @search_criteria = search_criteria
+      @movie_id = movie_id
       @api_key = key
     end
 
     def collection
-      { most_popular:
+      {
+        most_popular:
         {
           '1-20' => "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1",
           '21-40' => "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2"
@@ -15,7 +17,9 @@ module Services
         {
           '1-20' => "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1",
           '21-40' => "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2"
-        } }
+        },
+        details: "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}"
+      }
     end
 
     private

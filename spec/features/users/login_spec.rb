@@ -1,11 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Logging In" do
-  before :each do
-    @user = User.create!(
-      email: 'foo@bar.com',
-      password: 'guest')
-  end
+RSpec.describe 'Logging In' do
   # As a registered user
     # When I visit '/' and I click on a link that says "Log In"
     # Then I should see a login form
@@ -18,10 +13,10 @@ RSpec.describe "Logging In" do
   it 'cannot log a user in with invalid credentials' do
     visit login_path
 
-    fill_in :email, with: @user.email
+    fill_in :email, with: @admin.email
     fill_in :password, with: ''
 
-    click_on 'Log In'
+    click_on 'Submit'
     expect(current_path).to eq(login_path)
 
     expect(page).to have_content('Invalid credentials, please try again.')
@@ -32,14 +27,15 @@ RSpec.describe "Logging In" do
     click_on 'Log In'
     expect(current_path).to eq(login_path)
 
-    fill_in :email, with: @user.email
-    fill_in :password, with: @user.password
+    fill_in :email, with: @admin.email
+    fill_in :password, with: @admin.password
 
-    click_on 'Log In'
-    expect(current_path).to eq(dashboard_path(@user.id))
-    expect(page).to have_content("Welcome, #{@user.email}!")
+    click_on 'Submit'
+    expect(current_path).to eq(dashboard_path(@admin.id))
+    expect(page).to have_content("Welcome, #{@admin.email}!")
 
     visit root_path
+    expect(page).to have_content("Logged in as: #{@admin.email}")
     expect(page).to_not have_link('Log In')
     expect(page).to_not have_link('New User Registration')
 

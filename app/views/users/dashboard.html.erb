@@ -8,6 +8,7 @@
   <%= form.text_field :email, id: :email %>
   <%= form.submit 'Search' %>
 <% end %>
+<br>
 <% if !@user.friends? %>
   <h3>You Have No Followers</h3>
 <% else %>
@@ -19,25 +20,25 @@
   <% end %>
 <% end %>
 <br>
-<h2>Viewing Parties</h2>
-<table>
+<h2 align="center">Viewing Parties</h2>
+<table class="table table-sm table-borderless">
   <thead>
     <tr>
       <th colspan="2"></th>
     </tr>
-    <tr>
-      <td style="padding-right:150px;">
+    <tr align="center">
+      <td>
         <h3>My Parties:</h3>
       </td>
-      <td><h3>Parties I'm Invited To:</h3></td>
+      <td><h3>Invited To:</h3></td>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td style="vertical-align:text-top;">
+    <tr align="center">
+      <td>
         <%= render partial: 'parties', locals: { host: true} %>
       </td>
-      <td style="vertical-align:text-top;">
+      <td>
         <%= render partial: 'parties', locals: { host: false} %>
       </td>
     </tr>
