@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   def discover
     if params[:format]
-      @results = MovieService.search_results(params[:format])
+      @results = MovieFacade.search_results(params[:format])
     end
   end
 
@@ -11,6 +11,6 @@ class MoviesController < ApplicationController
   end
 
   def most_popular
-    @results = MovieService.most_popular
+    @results = MovieFacade.most_popular
   end
 end

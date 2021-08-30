@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MovieService do
+RSpec.describe MovieFacade do
   before :each do
     if Rails.application.credentials.movie_db.nil?
       @api_key = ''
@@ -9,14 +9,14 @@ RSpec.describe MovieService do
   end
 
   it 'exists' do
-    api = MovieService.new
+    api = MovieFacade.new
 
-    expect(api.class).to eq(MovieService)
+    expect(api.class).to eq(MovieFacade)
   end
 
   describe 'endpoints' do
     it 'can retrieve endpoints for top 40 most popular movies API calls' do
-      expected = MovieService.endpoints[:most_popular]
+      expected = MovieFacade.endpoints[:most_popular]
 
       expect(expected.class).to eq(Hash)
 
@@ -26,7 +26,7 @@ RSpec.describe MovieService do
       expect(expected.keys.last).to eq('21-40')
     end
     it 'can retrieve endpoints for up to 40 movies matching a search criteria' do
-      expected = MovieService.endpoints[:search]
+      expected = MovieFacade.endpoints[:search]
 
       expect(expected.class).to eq(Hash)
 
@@ -41,7 +41,7 @@ RSpec.describe MovieService do
     mock_response = "{\"login\":\"tvaroglu\",\"id\":12345678,\"url\":\"https://api.github.com/users/tvaroglu\"}"
     allow(Faraday).to receive(:get).and_return(mock_response)
 
-    expected = MovieService.render_request(MovieService.endpoints[:most_popular]['1-20'])
+    expected = MovieFacade.render_request(MovieFacade.endpoints[:most_popular]['1-20'])
     expect(expected['login']).to eq('tvaroglu')
   end
 
@@ -54,17 +54,25 @@ RSpec.describe MovieService do
       webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
         to_return(status: 200, body: json_blob_page_2)
 
-      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_1.response.body)
-      page_1_endpoint = MovieService.endpoints[:most_popular]['1-20']
-      page_1_response = MovieService.render_request(page_1_endpoint)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_1.response.body)
+      page_1_endpoint = MovieFacade.endpoints[:most_popular]['1-20']
+      page_1_response = MovieFacade.render_request(page_1_endpoint)
       expect(page_1_response['results'].length).to eq(20)
 
-      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_2.response.body)
-      page_2_endpoint = MovieService.endpoints[:most_popular]['21-40']
-      page_2_response = MovieService.render_request(page_2_endpoint)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_2.response.body)
+      page_2_endpoint = MovieFacade.endpoints[:most_popular]['21-40']
+      page_2_response = MovieFacade.render_request(page_2_endpoint)
       expect(page_2_response['results'].length).to eq(20)
 
-      expect(MovieService.most_popular.length).to eq(40)
+      expected = MovieFacade.most_popular
+      expect(expected.length).to eq(40)
+      expectations = expected.all? do |expectation|
+        expectation.class == Hash
+        !expectation[:id].nil?
+        !expectation[:title].nil?
+        !expectation[:vote_average].nil?
+      end
+      expect(expectations).to be true
     end
 
     it 'can return up to 40 movies matching a passed in search criteria' do
@@ -77,17 +85,25 @@ RSpec.describe MovieService do
       webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
         to_return(status: 200, body: json_blob_page_2)
 
-      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_1.response.body)
-      page_1_endpoint = MovieService.endpoints(@search_criteria)[:search]['1-20']
-      page_1_response = MovieService.render_request(page_1_endpoint)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_1.response.body)
+      page_1_endpoint = MovieFacade.endpoints(@search_criteria)[:search]['1-20']
+      page_1_response = MovieFacade.render_request(page_1_endpoint)
       expect(page_1_response['results'].length).to eq(20)
 
-      allow(MovieService).to receive(:make_request).and_return(webmock_request_page_2.response.body)
-      page_2_endpoint = MovieService.endpoints(@search_criteria)[:search]['21-40']
-      page_2_response = MovieService.render_request(page_2_endpoint)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_2.response.body)
+      page_2_endpoint = MovieFacade.endpoints(@search_criteria)[:search]['21-40']
+      page_2_response = MovieFacade.render_request(page_2_endpoint)
       expect(page_2_response['results'].length).to eq(20)
 
-      expect(MovieService.search_results(@search_results).length).to eq(40)
+      expected = MovieFacade.search_results(@search_results)
+      expect(expected.length).to eq(40)
+      expectations = expected.all? do |expectation|
+        expectation.class == Hash
+        !expectation[:id].nil?
+        !expectation[:title].nil?
+        !expectation[:vote_average].nil?
+      end
+      expect(expectations).to be true
     end
 
     it 'can return movies details for a specific movie' do
@@ -97,9 +113,9 @@ RSpec.describe MovieService do
       webmock_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}").
         to_return(status: 200, body: json_blob)
 
-      allow(MovieService).to receive(:make_request).and_return(webmock_request.response.body)
-      request_endpoint = MovieService.endpoints('', @movie_id)[:details]
-      response = MovieService.render_request(request_endpoint)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request.response.body)
+      request_endpoint = MovieFacade.endpoints('', @movie_id)[:details]
+      response = MovieFacade.render_request(request_endpoint)
       expect(response.class).to eq(Hash)
     end
   end

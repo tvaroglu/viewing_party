@@ -7,7 +7,7 @@ module Services
     end
 
     def parse
-      request = MovieService.make_request(@endpoint)
+      request = MovieFacade.make_request(@endpoint)
       request.instance_of?(String) ? JSON.parse(request) : JSON.parse(request.body)
     end
   end

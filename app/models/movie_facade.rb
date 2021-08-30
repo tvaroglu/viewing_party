@@ -2,7 +2,7 @@ require 'faraday'
 require 'json'
 require 'date'
 
-class MovieService
+class MovieFacade
   def initialize; end
 
   def self.make_request(endpoint)
@@ -23,5 +23,9 @@ class MovieService
 
   def self.search_results(search_criteria)
     Services::SearchResults.new(search_criteria).results
+  end
+
+  def self.movie(attributes)
+    Services::Movie.new(attributes).hash
   end
 end

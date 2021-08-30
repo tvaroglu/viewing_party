@@ -145,7 +145,7 @@ RSpec.describe 'user dashboard page' do
       mock_response = "{\"login\":\"tvaroglu\",\"id\":12345678,\"url\":\"https://api.github.com/users/tvaroglu\"}"
       allow(Faraday).to receive(:get).and_return(mock_response)
 
-      expected = MovieService.render_request(MovieService.endpoints[:most_popular]['1-20'])
+      expected = MovieFacade.render_request(MovieFacade.endpoints[:most_popular]['1-20'])
       expect(expected['login']).to eq('tvaroglu')
     end
 

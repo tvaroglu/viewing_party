@@ -16,11 +16,11 @@ RSpec.describe 'discover page' do
     @webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
       to_return(status: 200, body: @json_blob_page_2)
 
-    allow(MovieService).to receive(:make_request).and_return(@webmock_request_page_1.response.body)
-    @page_1_response = MovieService.render_request(MovieService.endpoints(@search_criteria)[:search]['1-20'])
+    allow(MovieFacade).to receive(:make_request).and_return(@webmock_request_page_1.response.body)
+    @page_1_response = MovieFacade.render_request(MovieFacade.endpoints(@search_criteria)[:search]['1-20'])
 
-    allow(MovieService).to receive(:make_request).and_return(@webmock_request_page_2.response.body)
-    @page_2_response = MovieService.render_request(MovieService.endpoints(@search_criteria)[:search]['21-40'])
+    allow(MovieFacade).to receive(:make_request).and_return(@webmock_request_page_2.response.body)
+    @page_2_response = MovieFacade.render_request(MovieFacade.endpoints(@search_criteria)[:search]['21-40'])
   end
   # As an authenticated user,
   # When I visit the '/discover' path
