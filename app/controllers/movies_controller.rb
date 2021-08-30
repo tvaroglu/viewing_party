@@ -10,5 +10,5 @@ class MoviesController < ApplicationController
     redirect_to discover_path(search_criteria)
   end
 
-  def top_rated; end
+  def most_popular; end
 end

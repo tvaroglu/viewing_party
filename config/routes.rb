@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   get '/discover', to: 'movies#discover'
   post '/discover', to: 'movies#search'
-  get '/popular', to: 'movies#top_rated'
+  get '/popular', to: 'movies#most_popular'
   # placeholder, add route once page built
   get '/movie/:movie_name', to: 'users#dashboard', as: '/movie'
 

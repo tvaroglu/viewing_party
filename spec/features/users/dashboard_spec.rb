@@ -141,6 +141,12 @@ RSpec.describe 'user dashboard page' do
       end
     end
 
+    it 'links to the discover page' do
+      # save_and_open_page
+      click_on 'Discover Movies'
+      expect(current_path).to eq(discover_path)
+    end
+
     # temporarily skipped, assertion will be updated once page is built and route modified accordingly
     xit 'links to the movie show page' do
       # save_and_open_page
@@ -150,11 +156,5 @@ RSpec.describe 'user dashboard page' do
       end
     end
 
-    # temporarily skipped, assertion will be updated once page is built and route modified accordingly
-    xit 'links to the discover page' do
-      # save_and_open_page
-      click_on 'Discover Movies'
-      expect(current_path).to eq(discover_path)
-    end
   end
 end

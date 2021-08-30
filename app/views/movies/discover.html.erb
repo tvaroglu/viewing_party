@@ -12,9 +12,9 @@
 <% elsif @search_results && @search_results.length > 0 %>
   <h3>Search Results:</h3>
   <% @search_results.each do |result| %>
-    <div id="result-<%= result['id'] %>" class="card text-black bg-warning mb-3" style="text-align:center; height:auto; max-width:15rem;">
+    <div id="result" class="card text-black bg-warning mb-3" style="text-align:center; height:auto; max-width:15rem;">
       <!-- Placeholder for path helper - need to add in real route when page is built -->
-      <p style="padding-top:20px;">Title: <%= link_to "#{result['original_title']}", movie_path(current_user.id) %></p>
+      <p id="movie-<%= result['id'] %>" style="padding-top:20px;">Title: <%= link_to "#{result['title']}", movie_path(current_user.id) %></p>
       <p>Vote Average: <%= result['vote_average'] %></p>
     </div>
   <% end %>
