@@ -1,7 +1,7 @@
 <h1>Discover Movies</h1>
 <br>
 <%= link_to "Top Rated", popular_path %></p>
-<%= form_with url: discover_path, method: :post, local: true do |form| %>
+<%= form_with url: discover_path, local: true do |form| %>
   <%= form.label :find_movies, 'Find Movies:' %>
   <%= form.text_field :search_criteria, id: :search_criteria %>
   <%= form.submit 'Search' %>
