@@ -6,6 +6,6 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.format_time(time)
-    time.localtime.strftime('%I:%M %p')
+    time.strftime('%I:%M %p')
   end
 end
