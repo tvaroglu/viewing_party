@@ -9,17 +9,11 @@ module Services
     end
 
     def genres
-      collection_arr = Array.new
-      if !@movie_details_response['id'].nil?
-        @movie_details_response['genres'].each do |genre|
-          collection_arr << genre.values[1]
-        end
-      end
-      collection_arr.to_s[1..-2]
+      @movie_details_response['genres'].map { |genre| genre.values[1] }.to_s[1..-2]
     end
 
     def details
-      if !@movie_details_hash['id'].nil?
+      if !@movie_details_response['id'].nil?
         @movie_details_hash[:id] = @movie_details_response['id']
         @movie_details_hash[:title] = @movie_details_response['title']
         @movie_details_hash[:runtime] = @movie_details_response['runtime']
