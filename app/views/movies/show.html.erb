@@ -3,7 +3,7 @@
 <%= button_to "Create Viewing Party", popular_path, params: {movie_id: @movie[:id], movie_title: @movie[:title], runtime: @movie[:runtime]}, method: :get, class: "btn btn-info btn-outline-dark" %>
 <br>
 <br>
-<table class="table table-sm table-borderless table-responsive table align-top">
+<table class="table table-sm table-borderless table-responsive table align-middle">
   <thead>
   </thead>
   <tbody>
@@ -15,8 +15,8 @@
         <h5 id="genres">Genres: <%= @movie[:genres] %></h5>
         <h6 id="overview">Overview: <%= @movie[:overview] %></h6>
      </td>
-      <td style="width:40%;">
-        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="height:18rem; width:auto; margin:auto; border-radius:10px;">
+      <td style="width:30%;">
+        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="height:20rem; width:auto; margin:auto; border-radius:10px;">
       </td>
     </tr>
   </tbody>
