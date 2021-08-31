@@ -6,21 +6,20 @@ class EventsController < ApplicationController
 
   def create
     event = event_params
-    event[:event_time] = Time.parse(event_params['event_time(1i)'] + '-' + event_params['event_time(2i)'] + '-' + event_params['event_time(3i)'] + '-' + event_params['event_time(4i)'] + '-' + event_params['event_time(5i)'])
+    event[:event_time] = ApplicationRecord.parse_event_time(event_params)
     new_event = current_user.events.create(event)
-    # if new_event.runtime < movie_runtime...
-      # render :new
-      # redirect_to new_event_path(params[:movie_id]) <-- movie details params
-      # flash[:alert] = "Error: Event runtime cannot be less than the movie runtime."
-    if new_event.save
+    if new_event.save && !params[:invited].nil?
       params[:invited].each { |user| Attendee.create(event: new_event, user: User.find_by(email: user)) }
       Attendee.create(event: new_event, user: current_user)
       redirect_to dashboard_path(current_user.id)
       flash[:alert] = "New viewing party successfully created for #{new_event.movie_title}!"
     else
       # require "pry"; binding.pry
-      redirect_to new_event_path
+      redirect_to new_event_path({movie_title: event_params[:movie_title], runtime: event_params[:runtime]})
       flash[:alert] = "Error: #{error_message(new_event.errors)}"
+      if params[:invited].nil?
+        flash[:alert] = "Error: You must invite followers to your party, #{error_message(new_event.errors)}"
+      end
     end
   end
 
