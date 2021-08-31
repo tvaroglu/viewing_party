@@ -17,14 +17,14 @@ RSpec.describe 'movie details page' do
   #  A text field to enter keyword(s) to search by movie title
   #  A Button to Search by Movie Title
   # Details When the user clicks on the Search button they should be taken to the movies page
-  it 'displays the movie attributes' do
+  xit 'displays the movie attributes' do
     json_blob = File.read('./spec/fixtures/movie_details.json')
     webmock_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}").
       to_return(status: 200, body: json_blob)
     allow(MovieFacade).to receive(:make_request).and_return(webmock_request.response.body)
 
     visit movie_path(@movie_id)
-    # save_and_open_page
+    save_and_open_page
     expect(page).to have_content('Movie Details')
     expect(page).to have_css('#title')
     expect(page).to have_css('#runtime')

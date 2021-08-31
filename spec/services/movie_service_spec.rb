@@ -35,10 +35,13 @@ RSpec.describe MovieFacade do
       expect(expected.keys.first).to eq('1-20')
       expect(expected.keys.last).to eq('21-40')
     end
-    it 'can retrieve the endpoint for movie details' do
+    it 'can retrieve the endpoints for movie details' do
       expected = MovieFacade.endpoints[:details]
 
-      expect(expected.class).to eq(String)
+      expect(expected.class).to eq(Hash)
+
+      expect(expected.keys.length).to eq(3)
+      expect(expected.values.length).to eq(3)
     end
   end
 
@@ -105,7 +108,7 @@ RSpec.describe MovieFacade do
         to_return(status: 200, body: json_blob)
       allow(MovieFacade).to receive(:make_request).and_return(webmock_request.response.body)
 
-      expected = MovieFacade.movie_details('75780')
+      expected = MovieFacade.movie_details(@movie_id)
       expect(expected.class).to eq(Hash)
       expectations = expected.all? do |expectation|
         !expected[:id].nil?
@@ -117,6 +120,42 @@ RSpec.describe MovieFacade do
         !expected[:overview].nil?
       end
       expect(expectations).to be true
+    end
+
+    it 'can return reviews for a specific movie' do
+      @movie_id = 75780
+
+      json_blob = File.read('./spec/fixtures/reviews.json')
+      webmock_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/reviews?api_key=#{@api_key}&language=en-US&page=1").
+        to_return(status: 200, body: json_blob)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request.response.body)
+
+      expected = MovieFacade.movie_reviews(@movie_id)
+      expect(expected.class).to eq(Array)
+      expected.each do |expectation|
+        expectation.class == Hash
+        !expectation[:id].nil?
+        !expectation[:author].nil?
+        !expectation[:content].nil?
+      end
+    end
+
+    it 'can return cast for a specific movie' do
+      @movie_id = 75780
+
+      json_blob = File.read('./spec/fixtures/cast.json')
+      webmock_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/credits?api_key=#{@api_key}&language=en-US").
+        to_return(status: 200, body: json_blob)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request.response.body)
+
+      expected = MovieFacade.movie_cast(@movie_id)
+      expect(expected.class).to eq(Array)
+      expected.each do |expectation|
+        expectation.class == Hash
+        !expectation[:id].nil?
+        !expectation[:name].nil?
+        !expectation[:character].nil?
+      end
     end
   end
 

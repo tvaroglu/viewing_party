@@ -8,3 +8,18 @@
 <h4 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h4>
 <h4 id="genres">Genres: <%= @movie[:genres].to_s[1..-2] %></h4>
 <h5 id="overview">Overview: <%= @movie[:overview] %></h5>
+<br>
+<h5>Cast:</h5>
+<% @cast.each do |member| %>
+  <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
+<% end %>
+<br>
+<% if @reviews.length > 0 %>
+  <h5><%= @reviews.length %> Reviews</h5>
+  <% @reviews.each do |review| %>
+    <div id="review">
+      <h6>Author: <%= review[:author] %></h6>
+      <p><%= review[:content] %></p>
+    </div>
+  <% end %>
+<% end %>
