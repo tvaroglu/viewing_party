@@ -1,6 +1,7 @@
 <h2><%= "Create New Viewing Party" %></h2>
 <%= form_with model: @event, local: true do |form| %>
   <!-- <%#= form.hidden_field(params[:movie_id]) %> -->
+  <%= form.text_field :movie_title, id: :movie_title %> <br>
   <%= form.label :event_date, 'Event Date:' %>
   <%= form.date_field :event_date, min: Date.today %> <br>
   <%= form.label :runtime, 'Event Duration (in Minutes):' %>
