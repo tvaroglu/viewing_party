@@ -13,4 +13,11 @@ class MoviesController < ApplicationController
   def most_popular
     @results = MovieFacade.most_popular
   end
+
+  def show
+    movie_id = params[:format]
+    @movie = MovieFacade.movie_details(movie_id)
+    @reviews = MovieFacade.movie_reviews(movie_id)
+    @cast = MovieFacade.movie_cast(movie_id)
+  end
 end
