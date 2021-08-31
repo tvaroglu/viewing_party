@@ -9,6 +9,8 @@ class UsersController < ApplicationController
     new_user = User.create(user)
     if new_user.save
       session[:user_id] = new_user.id
+      tom = User.find_by(email: 'tom@myspace.com')
+      new_user.followers << tom if tom
       redirect_to dashboard_path(new_user.id)
       flash[:alert] = "New account successfully created for: #{new_user.email}!"
     else
