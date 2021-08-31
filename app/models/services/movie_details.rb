@@ -20,6 +20,7 @@ module Services
         @movie_details_hash[:vote_average] = @movie_details_response['vote_average']
         @movie_details_hash[:genres] = genres
         @movie_details_hash[:overview] = @movie_details_response['overview']
+        @movie_details_hash[:poster_path] = @movie_details_response['poster_path']
       end
       @movie_details_hash
     end

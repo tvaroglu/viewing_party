@@ -3,16 +3,30 @@
 <%= link_to "Create Viewing Party", popular_path %>
 <br>
 <br>
-<h3 id="title"><%= @movie[:title] %></h3>
-<h4 id="runtime">Runtime: <%= "#{@movie[:runtime] / 60} hours #{@movie[:runtime] % 60} minutes" %></h4>
-<h4 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h4>
-<h4 id="genres">Genres: <%= @movie[:genres] %></h4>
-<h5 id="overview">Overview: <%= @movie[:overview] %></h5>
-<br>
-<h5>Cast:</h5>
-<% @cast.each do |member| %>
-  <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
-<% end %>
+<table class="table table-sm table-borderless">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <h3 id="title"><%= @movie[:title] %></h3>
+        <h4 id="runtime">Runtime: <%= "#{@movie[:runtime] / 60} hours #{@movie[:runtime] % 60} minutes" %></h4>
+        <h4 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h4>
+        <h4 id="genres">Genres: <%= @movie[:genres] %></h4>
+        <h5 id="overview">Overview: <%= @movie[:overview] %></h5>
+        <br>
+        <h5>Cast:</h5>
+        <% @cast.each do |member| %>
+          <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
+        <% end %>
+     </td>
+      <td align="center" style="border-radius:10px;">
+        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="width:12rem;">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 <br>
 <% if @reviews.length > 0 %>
   <h5><%= @reviews.length %> Reviews</h5>

@@ -122,6 +122,7 @@ RSpec.describe MovieFacade do
         !expected[:vote_average].nil?
         !expected[:genres].nil?
         !expected[:overview].nil?
+        !expected[:poster_path].nil?
       end
       expect(expectations).to be true
     end
