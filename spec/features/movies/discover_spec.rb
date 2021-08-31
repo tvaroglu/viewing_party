@@ -69,15 +69,4 @@ RSpec.describe 'discover page' do
     end
   end
 
-  it 'has links to the movie show page' do
-    format = JSON.parse(@search_blob_page_1)['results'].first['title'].split(' ')[0].downcase
-
-    fill_in :search_criteria, with: @search_criteria
-    click_on 'Search'
-    # save_and_open_page
-    within(first('#result')) do
-      expect(page).to have_current_path(discover_path(format))
-    end
-  end
-
 end
