@@ -1,6 +1,7 @@
-<h1>Discover Movies</h1>
-<%= link_to "Top Rated", popular_path %>
+<%= link_to "Top Rated", popular_path, class: "btn btn-info btn-outline-dark" %>
 <br>
+<br>
+<h1>Discover Movies</h1>
 <br>
 <%= form_with url: discover_path, local: true do |form| %>
   <%= form.label :find_movies, 'Find Movies:' %>

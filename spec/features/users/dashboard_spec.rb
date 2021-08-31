@@ -160,7 +160,7 @@ RSpec.describe 'user dashboard page' do
       # save_and_open_page
       within "#event-#{@event_1.id}" do
         click_on @event_1.movie_title
-        expect(current_path).to eq(movie_path(@admin.id))
+        expect(current_path).to eq(movie_path(@event_1.id))
       end
     end
 

@@ -1,6 +1,6 @@
 <h1>Movie Details</h1>
 <!-- Placeholder for new_event_path helper - need to add in real route when page is built -->
-<%= link_to "Create Viewing Party", popular_path({movie_id: @movie[:id], movie_title: @movie[:title], movie_runtime: @movie[:runtime]}) %>
+<%= button_to "Create Viewing Party", popular_path, params: {movie_id: @movie[:id], movie_title: @movie[:title], runtime: @movie[:runtime]}, method: :get, class: "btn btn-info" %>
 <br>
 <br>
 <table class="table table-sm table-borderless">
@@ -8,16 +8,18 @@
   </thead>
   <tbody>
     <tr>
-      <td>
+      <td style="width:50%;">
         <h3 id="title"><%= @movie[:title] %></h3>
-        <h4 id="runtime">Runtime: <%= "#{@movie[:runtime] / 60} hours #{@movie[:runtime] % 60} minutes" %></h4>
+        <h4 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h4>
         <h4 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h4>
         <h4 id="genres">Genres: <%= @movie[:genres] %></h4>
         <h5 id="overview">Overview: <%= @movie[:overview] %></h5>
         <br>
+        <% if @cast && @cast.length > 0 %>
         <h5>Cast:</h5>
-        <% @cast.each do |member| %>
-          <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
+          <% @cast.each do |member| %>
+            <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
+          <% end %>
         <% end %>
      </td>
       <td align="center">
@@ -28,7 +30,7 @@
 </table>
 
 <br>
-<% if @reviews.length > 0 %>
+<% if @reviews && @reviews.length > 0 %>
   <h5><%= @reviews.length %> Reviews</h5>
   <% @reviews.each do |review| %>
     <div id="review">

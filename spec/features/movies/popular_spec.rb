@@ -31,12 +31,12 @@ RSpec.describe 'most popular movies page' do
   # Details When the user clicks on the Search button they should be taken to the movies page
   it 'displays the 40 most popular movies' do
     # save_and_open_page
-    expect(page).to have_content('Search Results:')
+    expect(page).to have_content('Results:')
     expect(page).to have_css('#result', count: 40)
 
     within(first('#result')) do
-      expect(page).to have_content('Title:')
-      expect(page).to have_content('Vote Average:')
+      expect(page).to have_css('#title')
+      expect(page).to have_css('#vote_average')
     end
   end
 

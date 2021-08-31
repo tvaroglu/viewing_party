@@ -60,12 +60,12 @@ RSpec.describe 'discover page' do
     fill_in :search_criteria, with: @search_criteria
     click_on 'Search'
     # save_and_open_page
-    expect(page).to have_content('Search Results:')
+    expect(page).to have_content('Results:')
     expect(page).to have_css('#result', count: 40)
 
     within(first('#result')) do
-      expect(page).to have_content('Title:')
-      expect(page).to have_content('Vote Average:')
+      expect(page).to have_css('#title')
+      expect(page).to have_css('#vote_average')
     end
   end
 

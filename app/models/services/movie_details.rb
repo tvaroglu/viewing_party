@@ -26,11 +26,11 @@ module Services
     end
 
     def reviews
-      @movie_reviews_response['results'].map { |response_object| MovieFacade.review(response_object) }
+      @movie_reviews_response['results'].map { |response_object| MovieFacade.review(response_object) } if @movie_reviews_response['results']
     end
 
     def cast
-      @movie_cast_response['cast'][0..9].map { |response_object| MovieFacade.cast_member(response_object) }
+      @movie_cast_response['cast'][0..9].map { |response_object| MovieFacade.cast_member(response_object) } if @movie_cast_response['cast']
     end
   end
 end
