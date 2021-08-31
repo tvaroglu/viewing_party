@@ -3,11 +3,13 @@
 <% elsif @results && @results.length > 0 %>
   <h3>Results:</h3>
   <% @results.each do |result| %>
-    <div id="result" class="card text-black bg-warning mb-3" style="text-align:center; height:auto; max-width:15rem;">
-      <div id="title" style="padding-top:20px;">
-        <%= link_to "#{result[:title]}", movie_path(result[:id]), class: "btn btn-info btn-outline-secondary" %>
+    <div id="result" class="card bg-warning" align="center" style="width: 15rem; border-radius:10px;">
+      <img src="https://image.tmdb.org/t/p/w500<%= result[:poster_path] %>" alt="Poster" class="card-img-top", style="width: 15rem; border-radius:10px;">
+      <h5 id="vote_average" class="card-title" style="padding-top:20px;">Vote Average: <%= result[:vote_average] %></h5>
+      <div id="title" class="card-body">
+        <%= link_to "#{result[:title]}", movie_path(result[:id]), class: "btn btn-info btn-outline-dark" %>
       </div>
-      <p id="vote_average">Vote Average: <%= result[:vote_average] %></p>
     </div>
+    <br>
   <% end %>
 <% end %>
