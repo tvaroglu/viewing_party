@@ -7,13 +7,9 @@
 
 <img src="https://img.shields.io/travis/tvaroglu/viewing_party" />  
 
-## Welcome to Viewing Party - A database-driven web application
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/58891447/130533273-42be0ea9-4448-4f36-99d9-4026894d9853.png" alt="viewing_party_schema_v1"/>
-</p>
+### Welcome to Viewing Party - A database-driven web application
 
-Find the [project spec here](https://backend.turing.io/module3/projects/viewing_party)
-
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 ## Table of Contents
 
@@ -56,7 +52,7 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
   <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=flaste&logo=atom&logoColor=white" />  
   <img src="https://img.shields.io/badge/Git-F05032.svg?&style=flaste&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/GitHub-181717.svg?&style=flaste&logo=github&logoColor=white" />
-  <img src="https://img.shields.io/badge/Postman-FF6E4F.svg?&style=flat&logo=postman&logoColor=white" />
+  <img src="https://img.shields.io/badge/Postman-FF6E4F.svg?&style=flat&logo=postman&logoColor=white" /> </br>
   <img src="https://img.shields.io/badge/TravisCI-FFBC4F.svg?&style=flat&logo=travis&logoColor=white" />
   <img src="https://img.shields.io/badge/Heroku-430098.svg?&style=flaste&logo=heroku&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?&style=flaste&logo=postgresql&logoColor=white" />
@@ -96,20 +92,21 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 - Github: [Dane Brophy](https://github.com/danembb)
 - LinkedIn: [Dane Brophy](https://www.linkedin.com/in/dane-brophy/)
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/tvaroglu/viewing_party.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/tvaroglu/viewing_party.svg?style=flat
 [contributors-url]: https://github.com/tvaroglu/viewing_party/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/tvaroglu/viewing_party.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/tvaroglu/viewing_party.svg?style=flat
 [forks-url]: https://github.com/tvaroglu/viewing_party/network/members
-[stars-shield]: https://img.shields.io/github/stars/tvaroglu/viewing_party.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/tvaroglu/viewing_party.svg?style=flat
 [stars-url]: https://github.com/tvaroglu/viewing_party/stargazers
-[issues-shield]: https://img.shields.io/github/issues/tvaroglu/viewing_party.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/tvaroglu/viewing_party.svg?style=flat
 [issues-url]: https://github.com/tvaroglu/viewing_party/issues
 
 
-## Local Setup
+### Local Setup
 
 1. Fork and Clone the repo
 2. Install gem packages: `bundle install`
@@ -117,6 +114,15 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 
 Example wireframes to follow are found [here](https://backend.turing.io/module3/projects/viewing_party/wireframes)
 
+Find the [project spec here](https://backend.turing.io/module3/projects/viewing_party)
+
+#### Schema Design
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/58891447/130533273-42be0ea9-4448-4f36-99d9-4026894d9853.png" alt="viewing_party_schema_v1"/>
+</p>
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 #### Project Configurations
 

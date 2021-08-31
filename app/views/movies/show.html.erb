@@ -1,6 +1,6 @@
 <h1>Movie Details</h1>
-<!-- Placeholder for path helper - need to add in real route when page is built -->
-<%= link_to "Create Viewing Party", popular_path %>
+<!-- Placeholder for new_event_path helper - need to add in real route when page is built -->
+<%= link_to "Create Viewing Party", popular_path({movie_id: @movie[:id], movie_title: @movie[:title], movie_runtime: @movie[:runtime]}) %>
 <br>
 <br>
 <table class="table table-sm table-borderless">
@@ -20,8 +20,8 @@
           <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
         <% end %>
      </td>
-      <td align="center" style="border-radius:10px;">
-        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="width:12rem;">
+      <td align="center">
+        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="width:12rem; border-radius:10px;">
       </td>
     </tr>
   </tbody>
