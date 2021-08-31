@@ -3,39 +3,49 @@
 <%= button_to "Create Viewing Party", popular_path, params: {movie_id: @movie[:id], movie_title: @movie[:title], runtime: @movie[:runtime]}, method: :get, class: "btn btn-info btn-outline-dark" %>
 <br>
 <br>
-<table class="table table-sm table-borderless">
+<table class="table table-sm table-borderless table-responsive table align-top">
   <thead>
   </thead>
   <tbody>
-    <tr>
-      <td style="width:50%;">
+    <tr align="center">
+      <td style="width:20%; text-align:left;">
         <h3 id="title"><%= @movie[:title] %></h3>
-        <h4 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h4>
-        <h4 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h4>
-        <h4 id="genres">Genres: <%= @movie[:genres] %></h4>
-        <h5 id="overview">Overview: <%= @movie[:overview] %></h5>
-        <br>
-        <% if @cast && @cast.length > 0 %>
-        <h5>Cast:</h5>
-          <% @cast.each do |member| %>
-            <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
-          <% end %>
-        <% end %>
+        <h5 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h5>
+        <h5 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h5>
+        <h5 id="genres">Genres: <%= @movie[:genres] %></h5>
+        <h6 id="overview">Overview: <%= @movie[:overview] %></h6>
      </td>
-      <td align="center">
-        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="width:12rem; border-radius:10px;">
+      <td style="width:40%;">
+        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="height:18rem; width:auto; margin:auto; border-radius:10px;">
       </td>
     </tr>
   </tbody>
 </table>
-
+<% if @cast && @cast.length > 0 %>
+<h5>Cast:</h5>
+  <% @cast.each do |member| %>
+    <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
+  <% end %>
+<% end %>
 <br>
 <% if @reviews && @reviews.length > 0 %>
-  <h5><%= @reviews.length %> Reviews</h5>
-  <% @reviews.each do |review| %>
-    <div id="review">
-      <h6>Author: <%= review[:author] %></h6>
-      <p><%= review[:content] %></p>
-    </div>
-  <% end %>
+  <table class="table table-sm table-hover table-responsive table align-middle" style="border-radius:20px;">
+      <thead>
+        <tr>
+          <td>
+            <h5><%= @reviews.length %> Reviews</h5>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+      <% @reviews.each do |review| %>
+        <tr id="review">
+          <td style="padding-top:25px;">
+            <h6>Author: <%= review[:author] %></h6>
+            <p><%= review[:content] %></p>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
