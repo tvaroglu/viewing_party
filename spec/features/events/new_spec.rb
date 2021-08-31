@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'event index page' do
   before :each do
-    @event1 = Event.create!(movie_title: 'Suspiria', event_date: '2021-08-30'.to_date, event_time: '2021-08-30 08:00:00 -0600'.to_time, runtime: 125, user: @admin)
+    @event1 = Event.create!(movie_title: 'Suspiria', movie_id: 666, event_date: '2021-08-30'.to_date, event_time: '2021-08-30 08:00:00 -0600'.to_time, runtime: 125, user: @admin)
     @taylor = User.create!(email: 'foo@bar.com', password: 'test')
     @dane = User.create!(email: 'boo@far.com', password: 'nico')
     @admin.followers << [@dane, @taylor]
