@@ -15,7 +15,7 @@ module Services
           collection_arr << genre.values[1]
         end
       end
-      collection_arr
+      collection_arr.to_s[1..-2]
     end
 
     def details

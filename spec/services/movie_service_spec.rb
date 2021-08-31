@@ -9,9 +9,9 @@ RSpec.describe MovieFacade do
   end
 
   it 'exists' do
-    api = MovieFacade.new
+    facade = MovieFacade.new
 
-    expect(api.class).to eq(MovieFacade)
+    expect(facade.class).to eq(MovieFacade)
   end
 
   describe 'endpoints' do
@@ -25,6 +25,7 @@ RSpec.describe MovieFacade do
       expect(expected.keys.first).to eq('1-20')
       expect(expected.keys.last).to eq('21-40')
     end
+
     it 'can retrieve the endpoints for up to 40 movies matching a search criteria' do
       expected = MovieFacade.endpoints[:search]
 
@@ -35,12 +36,16 @@ RSpec.describe MovieFacade do
       expect(expected.keys.first).to eq('1-20')
       expect(expected.keys.last).to eq('21-40')
     end
+
     it 'can retrieve the endpoints for movie details' do
       expected = MovieFacade.endpoints[:details]
 
       expect(expected.class).to eq(Hash)
 
       expect(expected.keys.length).to eq(3)
+      expect(expected.keys[0]).to eq(:movie)
+      expect(expected.keys[1]).to eq(:reviews)
+      expect(expected.keys[2]).to eq(:cast)
       expect(expected.values.length).to eq(3)
     end
   end
@@ -116,7 +121,6 @@ RSpec.describe MovieFacade do
         !expected[:runtime].nil?
         !expected[:vote_average].nil?
         !expected[:genres].nil?
-        expected[:genres].class == Array
         !expected[:overview].nil?
       end
       expect(expectations).to be true

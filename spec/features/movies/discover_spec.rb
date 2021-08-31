@@ -2,25 +2,38 @@ require 'rails_helper'
 
 RSpec.describe 'discover page' do
   before :each do
-    visit discover_path
     if Rails.application.credentials.movie_db.nil?
       @api_key = ''
       allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
     end
+
     @search_criteria = 'jack'
 
-    @json_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
-    @json_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
-    @webmock_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1").
-      to_return(status: 200, body: @json_blob_page_1)
-    @webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
-      to_return(status: 200, body: @json_blob_page_2)
+    @search_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
+    @search_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
+    @search_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1").
+      to_return(status: 200, body: @search_blob_page_1)
+    @search_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
+      to_return(status: 200, body: @search_blob_page_2)
 
-    allow(MovieFacade).to receive(:make_request).and_return(@webmock_request_page_1.response.body)
-    @page_1_response = MovieFacade.render_request(MovieFacade.endpoints(@search_criteria)[:search]['1-20'])
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints(@search_criteria)[:search]['1-20']).
+      and_return(@search_request_page_1.response.body)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints(@search_criteria)[:search]['21-40']).
+      and_return(@search_request_page_2.response.body)
 
-    allow(MovieFacade).to receive(:make_request).and_return(@webmock_request_page_2.response.body)
-    @page_2_response = MovieFacade.render_request(MovieFacade.endpoints(@search_criteria)[:search]['21-40'])
+    @popular_blob_page_1 = File.read('./spec/fixtures/most_popular/most_popular_page_1_response.json')
+    @popular_blob_page_2 = File.read('./spec/fixtures/most_popular/most_popular_page_2_response.json')
+    @popular_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1").
+      to_return(status: 200, body: @popular_blob_page_1)
+    @popular_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
+      to_return(status: 200, body: @popular_blob_page_2)
+
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['1-20']).
+      and_return(@popular_request_page_1.response.body)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['21-40']).
+      and_return(@popular_request_page_2.response.body)
+
+    visit discover_path
   end
   # As an authenticated user,
   # When I visit the '/discover' path
@@ -30,7 +43,7 @@ RSpec.describe 'discover page' do
   #  A text field to enter keyword(s) to search by movie title
   #  A Button to Search by Movie Title
   # Details When the user clicks on the Search button they should be taken to the movies page
-  it 'displays a link to the top rated movies page' do
+  it 'has a link to the most popular movies page' do
     click_on 'Top Rated'
     expect(current_path).to eq(popular_path)
   end
@@ -56,14 +69,14 @@ RSpec.describe 'discover page' do
     end
   end
 
-  # temporarily skipped, assertion will be updated once page is built and route modified accordingly
-  xit 'links to the movie show page' do
+  it 'has links to the movie show page' do
+    format = JSON.parse(@search_blob_page_1)['results'].first['title'].split(' ')[0].downcase
+
     fill_in :search_criteria, with: @search_criteria
     click_on 'Search'
     # save_and_open_page
     within(first('#result')) do
-      click_on @page_2_response['results'].first['title']
-      expect(current_path).to eq(movie_path(@admin.id))
+      expect(page).to have_current_path(discover_path(format))
     end
   end
 
