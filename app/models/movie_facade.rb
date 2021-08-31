@@ -25,6 +25,10 @@ class MovieFacade
     Services::SearchResults.new(search_criteria).results
   end
 
+  def self.movie_details(movie_id)
+    Services::MovieDetails.new(movie_id).details
+  end
+
   def self.movie(attributes)
     Services::Movie.new(attributes).hash
   end

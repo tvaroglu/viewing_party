@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post '/discover', to: 'movies#search'
   get '/popular', to: 'movies#most_popular'
   # placeholder, add route once page built
-  get '/movie/:movie_name', to: 'users#dashboard', as: '/movie'
+  get '/movie', to: 'movies#show'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

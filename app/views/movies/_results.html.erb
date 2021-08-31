@@ -5,7 +5,7 @@
   <% @results.each do |result| %>
     <div id="result" class="card text-black bg-warning mb-3" style="text-align:center; height:auto; max-width:15rem;">
       <!-- Placeholder for path helper - need to add in real route when page is built -->
-      <p id="movie-<%= result[:id] %>" style="padding-top:20px;">Title: <%= link_to "#{result[:title]}", movie_path(current_user.id) %></p>
+      <p id="movie-<%= result[:id] %>" style="padding-top:20px;">Title: <%= link_to "#{result[:title]}", movie_path(result[:id]) %></p>
       <p>Vote Average: <%= result[:vote_average] %></p>
     </div>
   <% end %>

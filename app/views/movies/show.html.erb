@@ -1,0 +1,10 @@
+<h1>Movie Details</h1>
+<!-- Placeholder for path helper - need to add in real route when page is built -->
+<%= link_to "Create Viewing Party", popular_path %>
+<br>
+<br>
+<h3 id="title"><%= @movie[:title] %></h3>
+<h4 id="runtime">Runtime: <%= @movie[:runtime] %> minutes</h4>
+<h4 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h4>
+<h4 id="genres">Genres: <%= @movie[:genres].to_s[1..-2] %></h4>
+<h5 id="overview">Overview: <%= @movie[:overview] %></h5>
