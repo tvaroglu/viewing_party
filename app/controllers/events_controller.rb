@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-
   def new
     @event = Event.new
   end
@@ -14,16 +13,13 @@ class EventsController < ApplicationController
       redirect_to dashboard_path(current_user.id)
       flash[:alert] = "New viewing party successfully created for #{new_event.movie_title}!"
     else
-      # require "pry"; binding.pry
-      redirect_to new_event_path({movie_title: event_params[:movie_title], runtime: event_params[:runtime]})
+      redirect_to new_event_path({ movie_title: event_params[:movie_title], runtime: event_params[:runtime] })
       flash[:alert] = "Error: #{error_message(new_event.errors)}"
       if params[:invited].nil?
         flash[:alert] = "Error: You must invite followers to your party, #{error_message(new_event.errors)}"
       end
     end
   end
-
-
 
   private
 
