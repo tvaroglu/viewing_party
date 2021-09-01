@@ -55,7 +55,7 @@ RSpec.describe Event do
         'event_time(4i)'=>'01',
         'event_time(5i)'=>'00'
       }
-      expect(ApplicationRecord.parse_event_time(event_params)).to eq('2021-09-01 00:00:00.000000000 -0600')
+      expect(ApplicationRecord.parse_event_time(event_params).to_s.split(' ')[1]).to eq('00:00:00')
     end
   end
 end
