@@ -16,7 +16,7 @@ module Services
         upcoming:
         {
           '1-20' => "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=1",
-          '21-40' => "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=1",
+          '21-40' => "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=2"
         },
         search:
         {

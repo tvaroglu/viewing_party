@@ -26,6 +26,17 @@ RSpec.describe MovieFacade do
       expect(expected.keys.last).to eq('21-40')
     end
 
+    it 'can retrieve the endpoint for top 40 upcoming movies API calls' do
+      expected = MovieFacade.endpoints[:upcoming]
+
+      expect(expected.class).to eq(Hash)
+
+      expect(expected.keys.length).to eq(2)
+      expect(expected.values.length).to eq(2)
+      expect(expected.keys.first).to eq('1-20')
+      expect(expected.keys.last).to eq('21-40')
+    end
+
     it 'can retrieve the endpoints for up to 40 movies matching a search criteria' do
       expected = MovieFacade.endpoints[:search]
 
@@ -77,6 +88,28 @@ RSpec.describe MovieFacade do
       allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_2.response.body)
 
       expected = MovieFacade.most_popular
+      expect(expected.length).to eq(40)
+      expectations = expected.all? do |expectation|
+        expectation.class == Hash
+        !expectation[:id].nil?
+        !expectation[:title].nil?
+        !expectation[:vote_average].nil?
+      end
+      expect(expectations).to be true
+    end
+
+    it 'can return the top 40 upcoming movies' do
+      json_blob_page_1 = File.read('./spec/fixtures/upcoming/upcoming_page_1_response.json')
+      json_blob_page_2 = File.read('./spec/fixtures/upcoming/upcoming_page_2_response.json')
+      webmock_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=1").
+        to_return(status: 200, body: json_blob_page_1)
+      webmock_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=2").
+        to_return(status: 200, body: json_blob_page_2)
+
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_1.response.body)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request_page_2.response.body)
+
+      expected = MovieFacade.upcoming
       expect(expected.length).to eq(40)
       expectations = expected.all? do |expectation|
         expectation.class == Hash

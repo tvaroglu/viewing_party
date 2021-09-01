@@ -94,9 +94,9 @@ RSpec.configure do |config|
     # hook for GET /upcoming endpoint:
     @upcoming_blob_page_1 = File.read('./spec/fixtures/upcoming/upcoming_page_1_response.json')
     @upcoming_blob_page_2 = File.read('./spec/fixtures/upcoming/upcoming_page_2_response.json')
-    @upcoming_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1").
+    @upcoming_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=1").
       to_return(status: 200, body: @upcoming_blob_page_1)
-    @upcoming_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
+    @upcoming_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=2").
       to_return(status: 200, body: @upcoming_blob_page_2)
 
     allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:upcoming]['1-20']).
