@@ -59,8 +59,7 @@ RSpec.describe 'movie details page' do
     expect(page).to have_css('#review', count: 2)
   end
 
-  # temporarily skipped, assertion will be updated once page is built and route modified accordingly
-  xit 'links to the new viewing party page' do
+  it 'links to the new viewing party page' do
     click_on 'Create Viewing Party'
     expect(current_path).to eq(new_event_path)
   end
