@@ -1,0 +1,19 @@
+<h2><%= "Create New Viewing Party" %></h2>
+<%= form_with model: @event, local: true do |form| %>
+  <%= form.hidden_field :movie_id, id: :movie_id, value: params[:movie_id] %>
+  <%= form.text_field :movie_title, id: :movie_title, value: params[:movie_title] %> <br>
+  <%= form.label :event_date, 'Event Date:' %>
+  <%= form.date_field :event_date, id: :event_date, min: Date.today %> <br>
+  <%= form.label :runtime, 'Event Duration (in Minutes):' %>
+  <%= form.number_field :runtime, id: :runtime, min: params[:runtime], max: 480, value: params[:runtime] %> <br>
+  <%= form.label :event_time, 'Start Time:' %>
+  <%= form.time_select :event_time, {minute_step: 15, ampm: true}, id: :event_time %> <br>
+  <br>
+  <h5>Your Current Followers:</h5>
+  <% current_user.followers.each do |follower| %>
+    <div id="follower-<%= follower.id %>">
+      <p><%= check_box_tag 'invited[]', follower.email %> <%= follower.email %> </p>
+    </div>
+  <% end %>
+  <%= form.submit 'Create Event' %>
+<% end %>

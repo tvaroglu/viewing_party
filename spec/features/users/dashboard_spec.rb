@@ -67,6 +67,7 @@ RSpec.describe 'user dashboard page' do
       @event_1 = Event.create!(
         user: @taylor,
         movie_title: 'Kangaroo Jack',
+        movie_id: 3,
         event_date: '2021-08-29'.to_date,
         event_time: '2021-08-29 11:30:35 -0600'.to_time,
         runtime: 90
@@ -113,6 +114,7 @@ RSpec.describe 'user dashboard page' do
       event_2 = Event.create!(
         user: @dane,
         movie_title: 'The Terminator',
+        movie_id: 24,
         event_date: '2021-08-28'.to_date,
         event_time: '2021-08-28 21:40:05 -0600'.to_time,
         runtime: 100

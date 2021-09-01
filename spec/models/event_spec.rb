@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Event do
   describe 'validations' do
     it { should validate_presence_of(:movie_title) }
+    it { should validate_presence_of(:movie_id) }
     it { should validate_presence_of(:event_date) }
     it { should validate_presence_of(:event_time) }
     it { should validate_presence_of(:runtime) }
@@ -25,6 +26,7 @@ RSpec.describe Event do
       @event = Event.create!(
         user: @taylor,
         movie_title: 'Kangaroo Jack',
+        movie_id: 3,
         event_date: Date.today,
         event_time: Time.now,
         runtime: 90
