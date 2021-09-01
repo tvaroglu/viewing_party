@@ -21,6 +21,10 @@ class MovieFacade
     Services::MostPopular.new.results
   end
 
+  def self.upcoming
+    Services::Upcoming.new.results
+  end
+
   def self.search_results(search_criteria)
     Services::SearchResults.new(search_criteria).results
   end

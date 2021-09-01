@@ -16,6 +16,11 @@ class MoviesController < ApplicationController
     @results = MovieFacade.most_popular
   end
 
+  def upcoming
+    @config_details = MovieFacade.config
+    @results = MovieFacade.upcoming
+  end
+
   def show
     movie_id = params[:format]
     @config_details = MovieFacade.config

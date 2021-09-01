@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/discover', to: 'movies#discover'
   post '/discover', to: 'movies#search'
   get '/popular', to: 'movies#most_popular'
+  get '/upcoming', to: 'movies#upcoming'
   get '/movie', to: 'movies#show'
 
   get '/login', to: 'sessions#new'
