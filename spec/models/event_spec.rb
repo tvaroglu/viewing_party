@@ -26,6 +26,7 @@ RSpec.describe Event do
       @event = Event.create!(
         user: @taylor,
         movie_title: 'Kangaroo Jack',
+        movie_id: 3,
         event_date: Date.today,
         event_time: Time.now,
         runtime: 90
