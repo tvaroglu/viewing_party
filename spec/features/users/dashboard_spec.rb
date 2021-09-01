@@ -18,7 +18,6 @@ RSpec.describe 'user dashboard page' do
   it 'is on the correct page for the authenticated user' do
     expect(page).to have_content("Welcome, #{@admin.email}!")
     expect(page).to have_content('You Have No Followers')
-    expect(page).to have_content('Oops, no parties here!')
   end
 
   describe 'friend search: happy path' do
@@ -93,8 +92,7 @@ RSpec.describe 'user dashboard page' do
       # That I am the host of the party
       # List of friends invited to the viewing party
     it 'displays a section for viewing parties the user is invited to' do
-      expect(page).to have_content('My Parties:')
-      expect(page).to have_content("Invited To:")
+      expect(page).to have_content('Viewing Parties')
       # save_and_open_page
       within "#event-#{@event_1.id}" do
         expect(page).to have_content('Event Details')

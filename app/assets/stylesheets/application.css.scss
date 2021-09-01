@@ -19,14 +19,14 @@ html, body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-image: linear-gradient(white, gold);
+  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,209,67,1) 0%, rgba(255,145,83,1) 90% );
   margin: 0;
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: contain;
   background-attachment: fixed;
   font-family: 'Acme';
-  font-size: 22px;
+  font-size: 20px;
 }
 
 main {

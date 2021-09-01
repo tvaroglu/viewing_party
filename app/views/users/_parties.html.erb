@@ -1,11 +1,11 @@
 <% if host %>
   <% events = current_user.events %>
+  <% header = "My Parties:" %>
 <% else %>
   <% events = User.events_invited_to(current_user.id) %>
+  <% header = "Invited To:" %>
 <% end %>
-<% if events.length == 0 %>
-  <p align="left">Oops, no parties here!</br>Add some friends and discover movies to get started!</p>
-<% end %>
+<h3><%= header %></h3>
 <% events.each do |event| %>
   <div id="event-<%= event.id %>" class="card text-black bg-warning mb-3" style="text-align:center; height:auto; max-width:18rem;">
     <h4 class="card-header">Event Details:</h4>
