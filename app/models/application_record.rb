@@ -10,6 +10,8 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.parse_event_time(time_params)
-    Time.parse("#{time_params['event_time(1i)']}-#{time_params['event_time(2i)']}-#{time_params['event_time(3i)']}-#{time_params['event_time(4i)']}-#{time_params['event_time(5i)']}")
+    Time.parse(
+      "#{time_params['event_time(1i)']}-#{time_params['event_time(2i)']}-#{time_params['event_time(3i)']}-#{time_params['event_time(4i)']}-#{time_params['event_time(5i)']}"
+    )
   end
 end

@@ -44,9 +44,18 @@ RSpec.describe Event do
       expect(User.events_invited_to(@dane.id)).to eq([@event])
     end
 
-    it 'can return the formatted date and time for the event' do
+    it 'can return the formatted date and time for an event' do
       expect(ApplicationRecord.format_date(@event.event_date)).to eq('August 28, 2021')
-      expect(ApplicationRecord.format_time(@event.event_time)).to eq(ApplicationRecord.format_time(Time.now))
+      expect(ApplicationRecord.format_time(@event.event_time)).to eq('11:17 PM')
+
+      event_params = {
+        'event_time(1i)'=>'2021',
+        'event_time(2i)'=>'9',
+        'event_time(3i)'=>'1',
+        'event_time(4i)'=>'01',
+        'event_time(5i)'=>'00'
+      }
+      expect(ApplicationRecord.parse_event_time(event_params)).to eq('2021-09-01 00:00:00.000000000 -0600')
     end
   end
 end
