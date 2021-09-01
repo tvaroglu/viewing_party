@@ -116,7 +116,7 @@ Example wireframes to follow are found [here](https://backend.turing.io/module3/
 
 Find the [project spec here](https://backend.turing.io/module3/projects/viewing_party)
 
-#### Schema Design
+#### [Schema Design](https://app.dbdesigner.net/designer/schema/0-t-d-viewing_party)
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/58891447/131753620-4acc28aa-b7e3-4a4a-b6ad-aa641cf71046.png" alt="viewing_party_schema_v1"/>
