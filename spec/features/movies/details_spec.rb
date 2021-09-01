@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'movie details page' do
   before :each do
-    # if Rails.application.credentials.movie_db.nil?
-    #   @api_key = ''
-    #   allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    # end
-
     visit movie_path(@movie_id)
   end
   # As an authenticated user,

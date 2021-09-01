@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'discover page' do
   before :each do
-    # if Rails.application.credentials.movie_db.nil?
-    #   @api_key = ''
-    #   allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    # end
-
     visit discover_path
   end
   # As an authenticated user,

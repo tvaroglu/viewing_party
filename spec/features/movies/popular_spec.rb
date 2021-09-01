@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'most popular movies page' do
   before :each do
-    # if Rails.application.credentials.movie_db.nil?
-    #   @api_key = ''
-    #   allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    # end
-
     visit popular_path
   end
   # As an authenticated user,

@@ -91,7 +91,7 @@ RSpec.configure do |config|
     allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['21-40']).
       and_return(@popular_request_page_2.response.body)
 
-    # hook for GET /movie/{movie_id} endpoint
+    # hook for GET /movie/{movie_id} endpoint:
     @movie_id = 75780
 
     @details_blob = File.read('./spec/fixtures/movie_details.json')
