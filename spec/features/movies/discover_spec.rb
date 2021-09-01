@@ -2,36 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'discover page' do
   before :each do
-    if Rails.application.credentials.movie_db.nil?
-      @api_key = ''
-      allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    end
-
-    @search_criteria = 'jack'
-
-    @search_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
-    @search_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
-    @search_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1").
-      to_return(status: 200, body: @search_blob_page_1)
-    @search_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
-      to_return(status: 200, body: @search_blob_page_2)
-
-    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints(@search_criteria)[:search]['1-20']).
-      and_return(@search_request_page_1.response.body)
-    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints(@search_criteria)[:search]['21-40']).
-      and_return(@search_request_page_2.response.body)
-
-    @popular_blob_page_1 = File.read('./spec/fixtures/most_popular/most_popular_page_1_response.json')
-    @popular_blob_page_2 = File.read('./spec/fixtures/most_popular/most_popular_page_2_response.json')
-    @popular_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1").
-      to_return(status: 200, body: @popular_blob_page_1)
-    @popular_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
-      to_return(status: 200, body: @popular_blob_page_2)
-
-    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['1-20']).
-      and_return(@popular_request_page_1.response.body)
-    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['21-40']).
-      and_return(@popular_request_page_2.response.body)
+    # if Rails.application.credentials.movie_db.nil?
+    #   @api_key = ''
+    #   allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
+    # end
 
     visit discover_path
   end

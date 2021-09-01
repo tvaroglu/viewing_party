@@ -48,6 +48,12 @@ RSpec.describe MovieFacade do
       expect(expected.keys[2]).to eq(:cast)
       expect(expected.values.length).to eq(3)
     end
+
+    it 'can retrieve the endpoint for config details' do
+      expected = MovieFacade.endpoints[:config]
+
+      expect(expected.class).to eq(String)
+    end
   end
 
   it 'can render API requests via Faraday' do
@@ -162,6 +168,21 @@ RSpec.describe MovieFacade do
         !expectation[:name].nil?
         !expectation[:character].nil?
       end
+    end
+
+    it 'can return config details to render an image' do
+      json_blob = File.read('./spec/fixtures/config.json')
+      webmock_request = stub_request(:get, "https://api.themoviedb.org/3/configuration?api_key=#{@api_key}").
+        to_return(status: 200, body: json_blob)
+      allow(MovieFacade).to receive(:make_request).and_return(webmock_request.response.body)
+
+      expected = MovieFacade.config
+      expectations = expected.all? do |expectation|
+        expected.class == Hash
+        !expected[:secure_base_url].nil?
+        expected[:poster_size] == 'w500'
+      end
+      expect(expectations).to be true
     end
   end
 

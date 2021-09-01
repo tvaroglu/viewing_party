@@ -23,7 +23,8 @@ module Services
           movie: "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}",
           reviews: "https://api.themoviedb.org/3/movie/#{@movie_id}/reviews?api_key=#{@api_key}&language=en-US&page=1",
           cast: "https://api.themoviedb.org/3/movie/#{@movie_id}/credits?api_key=#{@api_key}&language=en-US"
-        }
+        },
+        config: "https://api.themoviedb.org/3/configuration?api_key=#{@api_key}"
       }
     end
 

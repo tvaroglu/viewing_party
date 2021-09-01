@@ -2,30 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'movie details page' do
   before :each do
-    if Rails.application.credentials.movie_db.nil?
-      @api_key = ''
-      allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    end
-
-    @movie_id = 75780
-
-    @details_blob = File.read('./spec/fixtures/movie_details.json')
-    @details_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}").
-      to_return(status: 200, body: @details_blob)
-    allow(MovieFacade).to receive(:render_request).with(MovieFacade.endpoints('', @movie_id)[:details][:movie]).
-      and_return(JSON.parse(@details_request.response.body))
-
-    @reviews_blob = File.read('./spec/fixtures/reviews.json')
-    @reviews_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/reviews?api_key=#{@api_key}&language=en-US&page=1").
-      to_return(status: 200, body: @reviews_blob)
-    allow(MovieFacade).to receive(:render_request).with(MovieFacade.endpoints('', @movie_id)[:details][:reviews]).
-      and_return(JSON.parse(@reviews_request.response.body))
-
-    @cast_blob = File.read('./spec/fixtures/cast.json')
-    @cast_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/credits?api_key=#{@api_key}&language=en-US").
-      to_return(status: 200, body: @cast_blob)
-    allow(MovieFacade).to receive(:render_request).with(MovieFacade.endpoints('', @movie_id)[:details][:cast]).
-      and_return(JSON.parse(@cast_request.response.body))
+    # if Rails.application.credentials.movie_db.nil?
+    #   @api_key = ''
+    #   allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
+    # end
 
     visit movie_path(@movie_id)
   end
@@ -51,6 +31,7 @@ RSpec.describe 'movie details page' do
     expect(page).to have_css('#vote_average')
     expect(page).to have_css('#genres')
     expect(page).to have_css('#overview')
+    expect(page).to have_css('#poster')
 
     expect(page).to have_content('Cast:')
     expect(page).to have_css('#member', count: 10)

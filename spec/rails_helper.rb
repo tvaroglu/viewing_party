@@ -46,8 +46,71 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.before(:each, :type => :feature) do
+    # hook for current_user method in ApplicationController:
     @admin = User.create!(email: 'admin@example.com', password: 'guest')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+
+    # hook for encrypted credentials (for TravisCI builds to pass)
+    if Rails.application.credentials.movie_db.nil?
+      @api_key = ''
+      allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
+    end
+
+    # hook for GET /config endpoint:
+    @config_blob = File.read('./spec/fixtures/config.json')
+    @config_request = stub_request(:get, "https://api.themoviedb.org/3/configuration?api_key=#{@api_key}").
+      to_return(status: 200, body: @config_blob)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:config]).
+      and_return(@config_request.response.body)
+
+    # hook for GET /search endpoint:
+    @search_criteria = 'jack'
+
+    @search_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
+    @search_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
+    @search_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1").
+      to_return(status: 200, body: @search_blob_page_1)
+    @search_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2").
+      to_return(status: 200, body: @search_blob_page_2)
+
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints(@search_criteria)[:search]['1-20']).
+      and_return(@search_request_page_1.response.body)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints(@search_criteria)[:search]['21-40']).
+      and_return(@search_request_page_2.response.body)
+
+    # hook for GET /popular endpoint:
+    @popular_blob_page_1 = File.read('./spec/fixtures/most_popular/most_popular_page_1_response.json')
+    @popular_blob_page_2 = File.read('./spec/fixtures/most_popular/most_popular_page_2_response.json')
+    @popular_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1").
+      to_return(status: 200, body: @popular_blob_page_1)
+    @popular_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
+      to_return(status: 200, body: @popular_blob_page_2)
+
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['1-20']).
+      and_return(@popular_request_page_1.response.body)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['21-40']).
+      and_return(@popular_request_page_2.response.body)
+
+    # hook for GET /movie/{movie_id} endpoint
+    @movie_id = 75780
+
+    @details_blob = File.read('./spec/fixtures/movie_details.json')
+    @details_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}").
+      to_return(status: 200, body: @details_blob)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints('', @movie_id)[:details][:movie]).
+      and_return(@details_request.response.body)
+
+    @reviews_blob = File.read('./spec/fixtures/reviews.json')
+    @reviews_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/reviews?api_key=#{@api_key}&language=en-US&page=1").
+      to_return(status: 200, body: @reviews_blob)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints('', @movie_id)[:details][:reviews]).
+      and_return(@reviews_request.response.body)
+
+    @cast_blob = File.read('./spec/fixtures/cast.json')
+    @cast_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/credits?api_key=#{@api_key}&language=en-US").
+      to_return(status: 200, body: @cast_blob)
+    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints('', @movie_id)[:details][:cast]).
+      and_return(@cast_request.response.body)
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

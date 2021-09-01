@@ -48,4 +48,8 @@ class MovieFacade
   def self.cast_member(attributes)
     Services::CastMember.new(attributes).hash
   end
+
+  def self.config
+    Services::Config.new.hash
+  end
 end

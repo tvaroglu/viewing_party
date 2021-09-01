@@ -144,11 +144,11 @@ RSpec.describe 'user dashboard page' do
     end
 
     it 'is annoying that SimpleCov makes me re-test a model method I stubbed because this is a feature test' do
-      mock_response = "{\"login\":\"tvaroglu\",\"id\":12345678,\"url\":\"https://api.github.com/users/tvaroglu\"}"
+      mock_response = "{\"login\":\"tvaroglu\",\"secure_base_url\":\"https://image.tmdb.org/t/p/\"}"
       allow(Faraday).to receive(:get).and_return(mock_response)
 
-      expected = MovieFacade.render_request(MovieFacade.endpoints[:most_popular]['1-20'])
-      expect(expected['login']).to eq('tvaroglu')
+      expected = MovieFacade.make_request(MovieFacade.endpoints[:config])
+      expect(expected.class).to eq String
     end
 
     it 'links to the discover page' do
