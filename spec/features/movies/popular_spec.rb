@@ -2,23 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'most popular movies page' do
   before :each do
-    if Rails.application.credentials.movie_db.nil?
-      @api_key = ''
-      allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    end
-
-    @popular_blob_page_1 = File.read('./spec/fixtures/most_popular/most_popular_page_1_response.json')
-    @popular_blob_page_2 = File.read('./spec/fixtures/most_popular/most_popular_page_2_response.json')
-    @popular_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1").
-      to_return(status: 200, body: @popular_blob_page_1)
-    @popular_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2").
-      to_return(status: 200, body: @popular_blob_page_2)
-
-    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['1-20']).
-      and_return(@popular_request_page_1.response.body)
-    allow(MovieFacade).to receive(:make_request).with(MovieFacade.endpoints[:most_popular]['21-40']).
-      and_return(@popular_request_page_2.response.body)
-
     visit popular_path
   end
   # As an authenticated user,

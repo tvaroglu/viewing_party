@@ -21,6 +21,10 @@ class MovieFacade
     Services::MostPopular.new.results
   end
 
+  def self.upcoming
+    Services::Upcoming.new.results
+  end
+
   def self.search_results(search_criteria)
     Services::SearchResults.new(search_criteria).results
   end
@@ -47,5 +51,9 @@ class MovieFacade
 
   def self.cast_member(attributes)
     Services::CastMember.new(attributes).hash
+  end
+
+  def self.config
+    Services::Config.new.hash
   end
 end

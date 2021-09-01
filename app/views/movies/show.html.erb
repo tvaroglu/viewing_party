@@ -14,8 +14,8 @@
         <h5 id="genres">Genres: <%= @movie[:genres] %></h5>
         <h6 id="overview">Overview: <%= @movie[:overview] %></h6>
      </td>
-      <td style="width:30%;">
-        <img src="https://image.tmdb.org/t/p/w500<%= @movie[:poster_path] %>" alt="Poster" style="height:20rem; width:auto; margin:auto; border-radius:10px;">
+      <td id="poster" style="width:30%;">
+        <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{@movie[:poster_path]}" %>" alt="Poster" style="height:20rem; width:auto; margin:auto; border-radius:10px;">
       </td>
     </tr>
   </tbody>

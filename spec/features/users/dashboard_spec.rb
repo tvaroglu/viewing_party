@@ -7,6 +7,7 @@ RSpec.describe 'user dashboard page' do
     # @admin = User.create!(email: 'admin@example.com', password: 'guest')
     visit dashboard_path(@admin.id)
   end
+
   # As an authenticated user,
     # I see a section for friends,
     # In this section, there should be a text field to enter a friend's email and a button to "Add Friend"
@@ -17,6 +18,7 @@ RSpec.describe 'user dashboard page' do
   it 'is on the correct page for the authenticated user' do
     expect(page).to have_content("Welcome, #{@admin.email}!")
     expect(page).to have_content('You Have No Followers')
+    expect(page).to have_content('Oops, no parties here!')
   end
 
   describe 'friend search: happy path' do
@@ -141,14 +143,6 @@ RSpec.describe 'user dashboard page' do
       within "#attendee-#{attendee_4.id}" do
         expect(page).to have_content(attendee_4.user_email)
       end
-    end
-
-    it 'is annoying that SimpleCov makes me re-test a model method I stubbed because this is a feature test' do
-      mock_response = "{\"login\":\"tvaroglu\",\"id\":12345678,\"url\":\"https://api.github.com/users/tvaroglu\"}"
-      allow(Faraday).to receive(:get).and_return(mock_response)
-
-      expected = MovieFacade.render_request(MovieFacade.endpoints[:most_popular]['1-20'])
-      expect(expected['login']).to eq('tvaroglu')
     end
 
     it 'links to the discover page' do
