@@ -11,6 +11,9 @@
         </li>
         <% if session[:user_id] && current_user %>
           <li class="nav-item">
+            <%= link_to "Discover", discover_path, class: "nav-link active" %>
+          </li>
+          <li class="nav-item">
             <%= link_to "Dashboard", dashboard_path(session[:user_id]), class: "nav-link active" %>
           </li>
           <li class="nav-item">
