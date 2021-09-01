@@ -2,14 +2,24 @@
   <h3>No Results Found, Please Try Another Search</h3>
 <% elsif @results && @results.length > 0 %>
   <h3>Results:</h3>
-  <% @results.each do |result| %>
-    <div id="result" class="card bg-warning" align="center" style="width:15rem; border-radius:10px;">
-      <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{result[:poster_path]}" %>" alt="Poster" class="card-img-top", style="width: 15rem; border-radius:10px;">
-      <h5 id="vote_average" class="card-title" style="padding-top:20px;">Vote Average: <%= result[:vote_average] %></h5>
-      <div id="title" class="card-body">
-        <%= link_to "#{result[:title]}", movie_path(result[:id]), class: "btn btn-info btn-outline-dark" %>
-      </div>
-    </div>
-    <br>
-  <% end %>
+  <table class="table table-sm table-borderless table-responsive table align-middle">
+    <thead>
+    </thead>
+    <tbody>
+      <tr align="center">
+        <% @results.each do |result| %>
+        <td>
+          <div id="result" class="card bg-warning" align="center" style="height:30rem; width:15rem; border-radius:10px;">
+            <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{result[:poster_path]}" %>" alt="Poster" class="card-img-top", style="height:20rem; width:15rem; border-radius:10px;">
+            <h5 id="vote_average" class="card-title" style="padding-top:10px;">Vote Average: <%= result[:vote_average] %></h5>
+            <div id="title" class="card-body">
+              <%= link_to "#{result[:title]}", movie_path(result[:id]), class: "btn btn-info btn-outline-dark" %>
+            </div>
+          </div>
+          <br>
+        </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
 <% end %>
