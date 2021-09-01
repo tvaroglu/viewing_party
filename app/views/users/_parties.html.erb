@@ -7,15 +7,18 @@
   <div id="event-<%= event.id %>" class="card text-black bg-warning mb-3" style="text-align:center; height:auto; max-width:18rem;">
     <h4 class="card-header">Event Details:</h4>
     <p class="card-header">Host: <strong><%= event.host %></strong></p>
-    <!-- Placeholder for path helper - need to add in real route when page is built -->
-    <p style="padding-top:20px;">Movie: <%= link_to "#{event.movie_title}", movie_path(event.id) %></p>
+    <div style="padding-top:20px; padding-bottom:10px;">
+      <%= link_to "#{event.movie_title}", movie_path(event.movie_id), class: "btn btn-info btn-outline-dark" %>
+    </div>
     <p><%= "Date: #{ApplicationRecord.format_date(event.event_date)}" %></p>
     <p><%= "Time: #{ApplicationRecord.format_time(event.event_time)}" %></p>
-    <h4 class="card-footer">Attendees:</h4>
-    <% event.attendees.each_with_index do |attendee, idx| %>
-      <p id="attendee-<%= attendee.id %>">
-        <%= "#{idx + 1}.) #{attendee.user_email}" %>
-      </p>
-    <% end %>
+    <div id="attendees">
+      <h4 class="card-footer">Attendees:</h4>
+      <% event.attendees.each_with_index do |attendee, idx| %>
+        <p id="attendee-<%= attendee.id %>">
+          <%= "#{idx + 1}.) #{attendee.user_email}" %>
+        </p>
+      <% end %>
+    </div>
   </div>
 <% end %>

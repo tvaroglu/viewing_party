@@ -97,7 +97,7 @@ RSpec.describe 'user dashboard page' do
       within "#event-#{@event_1.id}" do
         expect(page).to have_content('Event Details')
         expect(page).to have_content("Host: #{@event_1.host}")
-        expect(page).to have_content("Movie: #{@event_1.movie_title}")
+        expect(page).to have_content(@event_1.movie_title)
         expect(page).to have_content("Date: #{ApplicationRecord.format_date(@event_1.event_date)}")
         expect(page).to have_content("Time: #{ApplicationRecord.format_time(@event_1.event_time)}")
         expect(page).to have_content('Attendees:')
@@ -130,7 +130,7 @@ RSpec.describe 'user dashboard page' do
       within "#event-#{event_2.id}" do
         expect(page).to have_content('Event Details')
         expect(page).to have_content("Host: #{event_2.host}")
-        expect(page).to have_content("Movie: #{event_2.movie_title}")
+        expect(page).to have_content(event_2.movie_title)
         expect(page).to have_content("Date: #{ApplicationRecord.format_date(event_2.event_date)}")
         expect(page).to have_content("Time: #{ApplicationRecord.format_time(event_2.event_time)}")
         expect(page).to have_content('Attendees:')
@@ -157,12 +157,10 @@ RSpec.describe 'user dashboard page' do
       expect(current_path).to eq(discover_path)
     end
 
-    # temporarily skipped, assertion will be updated once page is built and route modified accordingly
-    xit 'links to the movie show page' do
+    it 'has links to the movie show page' do
       # save_and_open_page
       within "#event-#{@event_1.id}" do
-        click_on @event_1.movie_title
-        expect(current_path).to eq(movie_path(@event_1.id))
+        expect(page).to have_link(@event_1.movie_title)
       end
     end
 

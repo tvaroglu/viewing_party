@@ -2,10 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'event index page' do
   before :each do
-    @event1 = Event.create!(movie_title: 'Suspiria', movie_id: 666, event_date: '2021-08-30'.to_date, event_time: '2021-08-30 08:00:00 -0600'.to_time, runtime: 125, user: @admin)
     @taylor = User.create!(email: 'foo@bar.com', password: 'test')
+    @event1 = Event.create!(
+      movie_title: 'Suspiria',
+      movie_id: 666,
+      event_date: '2021-08-30'.to_date,
+      event_time: '2021-08-30 08:00:00 -0600'.to_time,
+      runtime: 125,
+      user: @taylor)
+
     @dane = User.create!(email: 'boo@far.com', password: 'nico')
     @admin.followers << [@dane, @taylor]
+
     visit new_event_path
   end
   # As an authenticated user,
@@ -33,7 +41,7 @@ RSpec.describe 'event index page' do
     find_field(id: :movie_id, type: :hidden).set(1)
     fill_in :event_date, with: '2021/08/30'
     fill_in :runtime, with: @event1.runtime
-    select '08 AM', :from => "event[event_time(4i)]"
+    select '02 PM', :from => "event[event_time(4i)]"
     select '00', :from => "event[event_time(5i)]"
 
     within "#follower-#{@admin.followers.first.id}" do
@@ -50,10 +58,11 @@ RSpec.describe 'event index page' do
     expect(page).to have_content("Date: #{ApplicationRecord.format_date(@event1.event_date)}")
     expect(page).to have_content("Time: #{ApplicationRecord.format_time(@event1.event_time)}")
 
-    # Add div-id block for within block
-    expect(page).to have_content("1.) #{@taylor.email}")
-    expect(page).to have_content("2.) #{@dane.email}")
-    expect(page).to have_content("3.) #{@admin.email}")
+    within(first('#attendees')) do
+      expect(page).to have_content(@taylor.email)
+      expect(page).to have_content(@dane.email)
+      expect(page).to have_content(@admin.email)
+    end
   end
 
   #Sad Path
