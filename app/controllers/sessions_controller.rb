@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
-  def new; end
+  def new
+    session[:expires_at] = 5.minutes.from_now
+  end
 
   def create
     found_user = User.find_by(email: params[:email].downcase)
@@ -15,6 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    reset_session
     flash[:alert] = 'You are now logged out, please come back soon!'
     redirect_to root_path
   end
