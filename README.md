@@ -110,7 +110,7 @@
 1. Fork and Clone the repo
 2. Install gem packages: `bundle install`
 3. Setup the database: `rails db:create`
-4. Setup [API Access](#api-access)
+4. Setup [API Access](#project-configurations)
 
 Example wireframes to follow are found [here](https://backend.turing.io/module3/projects/viewing_party/wireframes)
 
@@ -124,7 +124,7 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-#### Project Configurations
+#### <ins>Project Configurations</ins>
 
 * Ruby Version
     ```bash
@@ -145,7 +145,7 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
     Created database 'viewing_party_test'
     ```
 
-* <ins>API Access</ins>
+* API Access
   - Request an API key from [The MovieDB](https://developers.themoviedb.org/3/getting-started/authentication)
   - Remove the current `config/credentials.yml.enc` file and run `EDITOR="<editor> --wait" rails credentials:edit` from the command line to generate a new `master.key` to decrypt your stored v3 API key
   ```bash
