@@ -1,3 +1,5 @@
+Attendee.destroy_all
+Event.destroy_all
 User.destroy_all
 
 tom = User.create!(email: 'tom@myspace.com', password: 'lol')
