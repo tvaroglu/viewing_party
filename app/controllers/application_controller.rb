@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
       if time_left <= 0
         reset_session
         flash[:error] = 'Session Expired.'
-        redirect_to root_path
+        redirect_to login_path
       end
     end
   end

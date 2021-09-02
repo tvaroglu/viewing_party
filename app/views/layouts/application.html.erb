@@ -17,7 +17,7 @@
   <body>
     <main>
     <%= render partial: 'welcome/header', locals: { placeholder: ''} %>
-    <br><br><br>
+    <br><br>
     <% flash.each do |type, msg| %>
       <div class="alert alert-info">
         <%= msg %>

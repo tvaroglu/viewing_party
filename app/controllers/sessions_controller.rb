@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    session[:expires_at] = 5.minutes.from_now
+    session[:expires_at] = 10.minutes.from_now
   end
 
   def create

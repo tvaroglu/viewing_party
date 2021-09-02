@@ -9,11 +9,11 @@
       <tr align="center">
         <% @results.each do |result| %>
         <td>
-          <div id="result" class="card bg-warning" align="center" style="height:30rem; width:15rem; border-radius:10px;">
-            <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{result[:poster_path]}" %>" alt="Poster" class="card-img-top", style="height:20rem; width:15rem; border-radius:10px;">
-            <h5 id="vote_average" class="card-title" style="padding-top:10px;">Vote Average: <%= result[:vote_average] %></h5>
-            <div id="title" class="card-body">
-              <%= link_to "#{result[:title]}", movie_path(result[:id]), class: "btn btn-info btn-outline-dark" %>
+          <div id="result" class="card bg-warning" align="center" style="height:26rem; width:13rem; border-radius:10px;">
+            <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{result[:poster_path]}" %>" alt="Poster" class="card-img-top", style="height:18rem; width:13rem; border-radius:10px;">
+            <h5 id="vote_average" class="card-title" style="padding-top:10px; font-size: 18px;">Vote Average: <%= result[:vote_average] %></h5>
+            <div id="title" class="card-body align-top">
+              <%= link_to "#{result[:title]}", movie_path(result[:id]), class: "btn btn-info btn-sm btn-outline-dark" %>
             </div>
           </div>
           <br>
