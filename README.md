@@ -67,7 +67,6 @@
   <img src="https://img.shields.io/badge/shoulda--matchers-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" /> </br>
   <img src="https://img.shields.io/badge/launchy-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/capybara-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />
-  <img src="https://img.shields.io/badge/orderly-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/bcrypt-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/faraday-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />
   <img src="https://img.shields.io/badge/webmock-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
@@ -111,6 +110,7 @@
 1. Fork and Clone the repo
 2. Install gem packages: `bundle install`
 3. Setup the database: `rails db:create`
+4. Setup [API Access](#project-configurations)
 
 Example wireframes to follow are found [here](https://backend.turing.io/module3/projects/viewing_party/wireframes)
 
@@ -124,28 +124,46 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-#### Project Configurations
+#### <ins>Project Configurations</ins>
 
-* Ruby version
+* Ruby Version
     ```bash
     $ ruby -v
     ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-darwin20]
     ```
 
-* [System dependencies](https://github.com/tvaroglu/viewing_party/blob/main/Gemfile)
+* [System Dependencies](https://github.com/tvaroglu/viewing_party/blob/main/Gemfile)
     ```bash
     $ rails -v
     Rails 5.2.6
     ```
 
-* Database creation
+* Database Creation
     ```bash
     $ rails db:{drop,create,migrate,seed}
     Created database 'viewing_party_development'
     Created database 'viewing_party_test'
     ```
 
-* How to run the test suite
+* API Access
+  - Request an API key from [The MovieDB](https://developers.themoviedb.org/3/getting-started/authentication)
+  - Remove the current `config/credentials.yml.enc` file and run `EDITOR="<editor> --wait" rails credentials:edit` from the command line to generate a new `master.key` to decrypt your stored v3 API key
+  ```bash
+  $ rails credentials:show
+    movie_db:
+      access_key_id: 123
+      secret_access_key: <your_api_key>
+  ```
+  - If redeploying this application, don't forget to configure the access key within the `config vars` for your favorite hosting service!
+  ```bash
+  $ heroku config:set RAILS_MASTER_KEY=`cat config/master.key`
+  ```
+  - Note, if you prefer to use the v4 `Bearer` token, you will need to reconfigure your favorite API request library (`Faraday` used by default for this application) to pass the `Authorization` header with `Bearer <v4_token>`)
+    - The `MovieFacade.make_request(endpoint)` [method call](https://github.com/tvaroglu/viewing_party/blob/main/app/models/movie_facade.rb) is where this header customization would need to happen
+    - The `Services::RequestEndpoints` [module](https://github.com/tvaroglu/viewing_party/blob/main/app/models/services/request_endpoints.rb) will also need to be customized to remove placeholder query param interpolation and `private` method calls to `Rails.application.credentials` for API authentication via the v3 token method (shown above)
+
+
+* How to run the test suite:
     ```bash
     $ bundle exec rspec -fd
     ```
@@ -164,4 +182,4 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
     Use Ctrl-C to stop
     ```
 
-* [Heroku Deployment](https://t-d-viewing-party.herokuapp.com/), for production
+* [Heroku Deployment](https://tvaroglu-viewing-party.herokuapp.com/), for production
