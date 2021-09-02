@@ -110,7 +110,7 @@
 1. Fork and Clone the repo
 2. Install gem packages: `bundle install`
 3. Setup the database: `rails db:create`
-4. Setup [API access](#api-access)
+4. Setup [API Access](#api-access)
 
 Example wireframes to follow are found [here](https://backend.turing.io/module3/projects/viewing_party/wireframes)
 
@@ -126,26 +126,26 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 
 #### Project Configurations
 
-* Ruby version
+* Ruby Version
     ```bash
     $ ruby -v
     ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-darwin20]
     ```
 
-* [System dependencies](https://github.com/tvaroglu/viewing_party/blob/main/Gemfile)
+* [System Dependencies](https://github.com/tvaroglu/viewing_party/blob/main/Gemfile)
     ```bash
     $ rails -v
     Rails 5.2.6
     ```
 
-* Database creation
+* Database Creation
     ```bash
     $ rails db:{drop,create,migrate,seed}
     Created database 'viewing_party_development'
     Created database 'viewing_party_test'
     ```
 
-* API access
+* <ins>API Access</ins>
   - Request an API key from [The MovieDB](https://developers.themoviedb.org/3/getting-started/authentication)
   - Remove the current `config/credentials.yml.enc` file and run `EDITOR="<editor> --wait" rails credentials:edit` from the command line to generate a new `master.key` to decrypt your stored v3 API key
   ```bash
@@ -163,7 +163,7 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
     - The `Services::RequestEndpoints` [module](https://github.com/tvaroglu/viewing_party/blob/main/app/models/services/request_endpoints.rb) will also need to be customized to remove placeholder query param interpolation and `private` method calls to `Rails.application.credentials` for API authentication via the v3 token method (shown above)
 
 
-* How to run the test suite
+* How to run the test suite:
     ```bash
     $ bundle exec rspec -fd
     ```
