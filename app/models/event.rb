@@ -11,4 +11,9 @@ class Event < ApplicationRecord
   def host
     user.email
   end
+
+  def self.add_attendees(new_event, attendees, current_user)
+    attendees.each { |user_email| Attendee.create(event: new_event, user: User.find_by(email: user_email)) }
+    Attendee.create(event: new_event, user: current_user)
+  end
 end

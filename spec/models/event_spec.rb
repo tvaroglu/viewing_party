@@ -57,5 +57,17 @@ RSpec.describe Event do
       }
       expect(ApplicationRecord.parse_event_time(event_params).to_s.split(' ')[1]).to eq('00:00:00')
     end
+
+    it 'can add attendees to an event' do
+      attendees = [@dane.email, @admin.email]
+      Event.add_attendees(@event, attendees, @taylor)
+
+      expected = @event.attendees
+
+      expect(expected.length).to eq 3
+      expect(expected[0].user_id).to eq(@dane.id)
+      expect(expected[1].user_id).to eq(@admin.id)
+      expect(expected[2].user_id).to eq(@taylor.id)
+    end
   end
 end

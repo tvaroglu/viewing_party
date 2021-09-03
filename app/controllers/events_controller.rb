@@ -7,8 +7,7 @@ class EventsController < ApplicationController
     event_params[:event_time] = ApplicationRecord.parse_event_time(event_params)
     new_event = current_user.events.create(event_params)
     if new_event.save && !params[:invited].nil?
-      params[:invited].each { |user| Attendee.create(event: new_event, user: User.find_by(email: user)) }
-      Attendee.create(event: new_event, user: current_user)
+      Event.add_attendees(new_event, params[:invited], current_user)
       redirect_to dashboard_path(current_user.id)
       flash[:alert] = "New viewing party successfully created for #{new_event.movie_title}!"
     else
