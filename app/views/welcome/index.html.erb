@@ -5,4 +5,8 @@
 <br>
 <h5>Viewing Party is an application in which users can explore movie options and create a viewing party event for their invited friends</h5>
 <br>
-<h5>Visit the Discover page to search for movies and get started!</h5>
+<% if session[:user_id] && current_user %>
+  <h5>Visit the Discover page to search for movies and get started!</h5>
+<% else %>
+  <h5>Get started today by creating an account or logging in!</h5>
+<% end %>
