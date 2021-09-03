@@ -109,8 +109,8 @@
 
 1. Fork and Clone the repo
 2. Install gem packages: `bundle install`
-3. Setup the database: `rails db:create`
-4. Setup [API Access](#project-configurations)
+3. Set up the database: `rails db:{drop,create,migrate,seed}`
+4. Set up [API Access](#project-configurations)
 
 Example wireframes to follow are found [here](https://backend.turing.io/module3/projects/viewing_party/wireframes)
 

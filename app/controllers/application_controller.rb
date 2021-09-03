@@ -9,8 +9,10 @@ class ApplicationController < ActionController::Base
       time_left = (session[:expires_at].to_time - Time.now).to_i
       if time_left <= 0
         reset_session
-        flash[:error] = 'Session Expired.'
+        flash[:error] = 'Session expired, please re-enter your credentials to log in.'
         redirect_to login_path
+      else
+        session[:expires_at] = 10.minutes.from_now
       end
     end
   end
