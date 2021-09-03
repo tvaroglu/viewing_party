@@ -3,7 +3,7 @@
 <br>
 <br>
 <%= form_with url: dashboard_path(@user.id), local: true do |form| %>
-  <%= form.label :find_friends, 'Find Friends:' %>
+  <%= form.label :find_friends, 'Find Friends by Email:' %>
   <%= form.text_field :email, id: :email %>
   <%= form.submit 'Search', class: "btn btn-info btn-sm btn-outline-dark" %>
 <% end %>

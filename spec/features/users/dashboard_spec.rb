@@ -22,7 +22,7 @@ RSpec.describe 'user dashboard page' do
 
   describe 'friend search: happy path' do
     it "can search for friends to add that exist in the database that aren't already following the user" do
-      expect(page).to have_content('Find Friends:')
+      expect(page).to have_content('Find Friends by Email:')
 
       fill_in :email, with: @dane.email
       click_on 'Search'
