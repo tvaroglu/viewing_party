@@ -51,12 +51,6 @@ RSpec.configure do |config|
     @admin = User.create!(email: 'admin@example.com', password: 'guest')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
 
-    # # hook for encrypted credentials (for TravisCI builds to pass)
-    # if Rails.application.credentials.movie_db.nil?
-    #   @api_key = ''
-    #   allow_any_instance_of(Services::RequestEndpoints).to receive(:key).and_return(@api_key)
-    # end
-
     # hook for GET /config endpoint:
     @config_blob = File.read('./spec/fixtures/config.json')
     @config_request = stub_request(:get, "https://api.themoviedb.org/3/configuration?api_key=#{@api_key}").
