@@ -1,8 +1,13 @@
 <br>
+<h3>Log In</h3>
 <%= form_with url: login_path, method: :post, local: true do |form| %>
   <%= form.label :email, 'Email:' %>
+  <br>
   <%= form.text_field :email %>
+  <br>
   <%= form.label :password, 'Password:' %>
+  <br>
   <%= form.password_field :password %>
+  <br><br>
   <%= form.submit 'Submit', class: "btn btn-info btn-sm btn-outline-dark" %>
 <% end %>
