@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe MovieFacade do
   before :each do
     if Rails.application.credentials.movie_db.nil?
-      @api_key = ''
-      allow_any_instance_of(Services::RequestEndpoints).to receive(:v3_key).and_return(@api_key)
+      let(:api_key) { '' }
+      allow_any_instance_of(Services::RequestEndpoints).to receive(:v3_key).and_return(api_key)
     end
   end
 
