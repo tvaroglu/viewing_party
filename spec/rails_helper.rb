@@ -50,10 +50,18 @@ RSpec.configure do |config|
     @admin = User.create!(email: 'admin@example.com', password: 'guest')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
 
+    @headers = {
+      'Accept' => '*/*',
+      'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      'User-Agent' => 'Faraday v1.7.1',
+      'Authorization'=>ENV['bearer']
+    }
+
     # hook for GET /config endpoint:
     @config_blob = File.read('./spec/fixtures/config.json')
-    @config_request = stub_request(:get, "https://api.themoviedb.org/3/configuration?api_key=#{@api_key}")
-      .to_return(status: 200, body: @config_blob)
+    @config_request = stub_request(:get, "https://api.themoviedb.org/3/configuration")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @config_blob, headers: {})
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints[:config])
       .and_return(JSON.parse(@config_request.response.body))
@@ -61,10 +69,12 @@ RSpec.configure do |config|
     # hook for GET /popular endpoint:
     @popular_blob_page_1 = File.read('./spec/fixtures/most_popular/most_popular_page_1_response.json')
     @popular_blob_page_2 = File.read('./spec/fixtures/most_popular/most_popular_page_2_response.json')
-    @popular_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=1")
-      .to_return(status: 200, body: @popular_blob_page_1)
-    @popular_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?api_key=#{@api_key}&sort_by=popularity.desc&page=2")
-      .to_return(status: 200, body: @popular_blob_page_2)
+    @popular_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&page=1")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @popular_blob_page_1, headers: {})
+    @popular_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&page=2")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @popular_blob_page_2, headers: {})
 
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints[:most_popular]['1-20'])
@@ -76,10 +86,12 @@ RSpec.configure do |config|
     # hook for GET /upcoming endpoint:
     @upcoming_blob_page_1 = File.read('./spec/fixtures/upcoming/upcoming_page_1_response.json')
     @upcoming_blob_page_2 = File.read('./spec/fixtures/upcoming/upcoming_page_2_response.json')
-    @upcoming_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=1")
-      .to_return(status: 200, body: @upcoming_blob_page_1)
-    @upcoming_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?api_key=#{@api_key}&sort_by=popularity.desc&language=en&page=2")
-      .to_return(status: 200, body: @upcoming_blob_page_2)
+    @upcoming_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?sort_by=popularity.desc&language=en&page=1")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @upcoming_blob_page_1, headers: {})
+    @upcoming_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/movie/upcoming?sort_by=popularity.desc&language=en&page=2")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @upcoming_blob_page_2, headers: {})
 
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints[:upcoming]['1-20'])
@@ -93,10 +105,12 @@ RSpec.configure do |config|
 
     @search_blob_page_1 = File.read('./spec/fixtures/search/search_page_1_response.json')
     @search_blob_page_2 = File.read('./spec/fixtures/search/search_page_2_response.json')
-    @search_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=1")
-      .to_return(status: 200, body: @search_blob_page_1)
-    @search_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{@api_key}&query=#{@search_criteria}&sort_by=popularity.desc&page=2")
-      .to_return(status: 200, body: @search_blob_page_2)
+    @search_request_page_1 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?query=#{@search_criteria}&sort_by=popularity.desc&page=1")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @search_blob_page_1, headers: {})
+    @search_request_page_2 = stub_request(:get, "https://api.themoviedb.org/3/search/movie?query=#{@search_criteria}&sort_by=popularity.desc&page=2")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @search_blob_page_2, headers: {})
 
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints(@search_criteria)[:search]['1-20'])
@@ -109,22 +123,25 @@ RSpec.configure do |config|
     @movie_id = 75780
 
     @details_blob = File.read('./spec/fixtures/movie_details.json')
-    @details_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}?api_key=#{@api_key}")
-      .to_return(status: 200, body: @details_blob)
+    @details_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @details_blob, headers: {})
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints('', @movie_id)[:details][:movie])
       .and_return(JSON.parse(@details_request.response.body))
 
     @reviews_blob = File.read('./spec/fixtures/reviews.json')
-    @reviews_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/reviews?api_key=#{@api_key}&language=en-US&page=1")
-      .to_return(status: 200, body: @reviews_blob)
+    @reviews_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/reviews?language=en-US&page=1")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @reviews_blob, headers: {})
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints('', @movie_id)[:details][:reviews])
       .and_return(JSON.parse(@reviews_request.response.body))
 
     @cast_blob = File.read('./spec/fixtures/cast.json')
-    @cast_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/credits?api_key=#{@api_key}&language=en-US")
-      .to_return(status: 200, body: @cast_blob)
+    @cast_request = stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie_id}/credits?language=en-US")
+      .with(headers: @headers)
+      .to_return(status: 200, body: @cast_blob, headers: {})
     allow(MovieFacade).to receive(:render_request)
       .with(MovieFacade.endpoints('', @movie_id)[:details][:cast])
       .and_return(JSON.parse(@cast_request.response.body))
