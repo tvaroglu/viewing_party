@@ -7,7 +7,7 @@ module Services
     end
 
     def parse
-      request = MovieFacade.make_request(@endpoint)
+      request = Faraday.get(@endpoint)
       request.instance_of?(String) ? JSON.parse(request) : JSON.parse(request.body)
     end
   end

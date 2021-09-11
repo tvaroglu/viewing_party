@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
 
   def session_expires
     if !session[:expires_at].nil?
-      time_left = (session[:expires_at].to_time - Time.now).to_i
-      if time_left <= 0
+      if (session[:expires_at].to_time - Time.now).to_i <= 0
+        session[:user_id] = nil
         reset_session
         flash[:error] = 'Session expired, please re-enter your credentials.'
         redirect_to login_path

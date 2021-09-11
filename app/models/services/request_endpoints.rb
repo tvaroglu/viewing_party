@@ -3,9 +3,9 @@ module Services
     def initialize(search_criteria, movie_id)
       @search_criteria = search_criteria
       @movie_id = movie_id
-      @api_key = key
       @base_url = 'https://api.themoviedb.org/3'
       @sort_criteria = 'popularity.desc'
+      @api_key = v3_key
     end
 
     def collection
@@ -37,7 +37,7 @@ module Services
 
     private
 
-    def key
+    def v3_key
       Rails.application.credentials.movie_db.values.last
     end
   end

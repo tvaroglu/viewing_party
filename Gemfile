@@ -39,6 +39,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap'
 
 gem 'faraday'
+gem 'json'
+gem 'date'
 
 
 group :development, :test do
