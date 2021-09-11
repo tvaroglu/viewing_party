@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
   end
 
   def show
-    movie_id = params[:format]
+    movie_id = params[:id]
     @config_details = MovieFacade.config
     @movie = MovieFacade.movie_details(movie_id)
     @reviews = MovieFacade.movie_reviews(movie_id)

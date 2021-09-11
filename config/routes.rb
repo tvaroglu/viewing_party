@@ -10,11 +10,11 @@ Rails.application.routes.draw do
   post '/discover', to: 'movies#search'
   get '/popular', to: 'movies#most_popular'
   get '/upcoming', to: 'movies#upcoming'
-  get '/movie', to: 'movies#show'
+  get '/movie/:id', to: 'movies#show', as: '/movie'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
-  resources :events, only: [:create, :new]
+  resources :events, only: [:new, :create]
 end

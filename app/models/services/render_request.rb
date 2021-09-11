@@ -6,9 +6,14 @@ module Services
       @endpoint = endpoint
     end
 
+    def conn
+      request = Faraday.new(url: @endpoint) do |faraday|
+        faraday.headers['Authorization'] = ENV['bearer']
+      end.get(@endpoint)
+    end
+
     def parse
-      request = Faraday.get(@endpoint)
-      request.instance_of?(String) ? JSON.parse(request) : JSON.parse(request.body)
+      conn.instance_of?(String) ? JSON.parse(conn) : JSON.parse(conn.body)
     end
   end
 end

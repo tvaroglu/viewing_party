@@ -57,11 +57,11 @@ end
 
 group :test do
   gem 'rspec-rails', '~> 4.0.1'
-  gem 'orderly'
+  gem 'simplecov'
   gem 'shoulda-matchers'
   gem 'launchy'
-  gem 'simplecov'
   gem 'capybara'
+  gem 'orderly'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'webmock'
