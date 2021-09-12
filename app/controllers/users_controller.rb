@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def search
     found_user = User.find_by(email: params[:email].downcase)
     if !found_user.nil? && found_user.email == current_user.email
-      flash[:alert] = "You cannot follow yourself!"
+      flash[:alert] = 'You cannot follow yourself!'
     elsif !found_user.nil? && current_user.already_friends_with?(found_user.id)
       flash[:alert] = "#{found_user.email} is already following you!"
     elsif !found_user.nil? && !current_user.already_friends_with?(found_user.id)
