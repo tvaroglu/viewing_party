@@ -52,7 +52,8 @@
   <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=flaste&logo=atom&logoColor=white" />  
   <img src="https://img.shields.io/badge/Git-F05032.svg?&style=flaste&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/GitHub-181717.svg?&style=flaste&logo=github&logoColor=white" />
-  <img src="https://img.shields.io/badge/Postman-FF6E4F.svg?&style=flat&logo=postman&logoColor=white" /> </br>
+  <img src="https://img.shields.io/badge/Postman-FF6E4F.svg?&style=flat&logo=postman&logoColor=white" />
+  </br>
   <img src="https://img.shields.io/badge/TravisCI-FFBC4F.svg?&style=flat&logo=travis&logoColor=white" />
   <img src="https://img.shields.io/badge/Heroku-430098.svg?&style=flaste&logo=heroku&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?&style=flaste&logo=postgresql&logoColor=white" />
@@ -64,10 +65,12 @@
   <img src="https://img.shields.io/badge/pry-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/rubocop-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/simplecov-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
-  <img src="https://img.shields.io/badge/shoulda--matchers-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" /> </br>
+  <img src="https://img.shields.io/badge/shoulda--matchers-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />
+  </br>
   <img src="https://img.shields.io/badge/launchy-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/capybara-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />
   <img src="https://img.shields.io/badge/bcrypt-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
+  <img src="https://img.shields.io/badge/figaro-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
   <img src="https://img.shields.io/badge/faraday-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />
   <img src="https://img.shields.io/badge/webmock-b81818.svg?&style=flaste&logo=rubygems&logoColor=white" />  
 </p>
@@ -147,20 +150,23 @@ Find the [project spec here](https://backend.turing.io/module3/projects/viewing_
 
 * API Access
   - Request an API key from [The MovieDB](https://developers.themoviedb.org/3/getting-started/authentication)
-  - Remove the current `config/credentials.yml.enc` file and run `EDITOR="<editor> --wait" rails credentials:edit` from the command line to generate a new `master.key` to decrypt your stored v3 API key
-    ```bash
-    $ rails credentials:show
-      movie_db:
-        access_key_id: 123
-        secret_access_key: <your_api_key>
-    ```
-  - If redeploying this application, don't forget to configure the access key within the `config vars` for your favorite hosting service!
-    ```bash
-    $ heroku config:set RAILS_MASTER_KEY=`cat config/master.key`
-    ```
-  - Note, if you prefer to use the v4 `Bearer` token, you will need to reconfigure your favorite API request library (`Faraday` used by default for this application) to pass the `Authorization` header with `Bearer <v4_token>`)
-    - The `MovieFacade.make_request(endpoint)` [method call](https://github.com/tvaroglu/viewing_party/blob/main/app/models/movie_facade.rb) is where this header customization would need to happen
-    - The `Services::RequestEndpoints` [module](https://github.com/tvaroglu/viewing_party/blob/main/app/models/services/request_endpoints.rb) will also need to be customized to remove placeholder query param interpolation and `private` method calls to `Rails.application.credentials` for API authentication via the v3 token method (shown above)
+  - **v4 (Bearer Token) authentication:**
+    - Run `bundle exec figaro install` to create a `config/application.yml` file
+      - NOTE: make sure your VCS of choice has appended this file to your `.gitignore`
+    - Add your v4 `'Bearer ...'` token as `bearer:` to the `config/application.yml` file
+    - If redeploying this application, don't forget to add this environment variable to the `config vars` of your hosting service of choice
+  - **v3 (Query Param) authentication:**
+    - Remove the current `config/credentials.yml.enc` file and run `EDITOR="<editor> --wait" rails credentials:edit` from the command line to generate a new `master.key` to decrypt your stored v3 API key:
+      ```bash
+      $ rails credentials:show
+        movie_db:
+          access_key_id: 123
+          secret_access_key: <your_api_key>
+      ```
+    - If redeploying this application, the master key can be echoed directly from the command line, as follows:
+      ```bash
+      $ heroku config:set RAILS_MASTER_KEY=`cat config/master.key`
+      ```
 
 
 * How to run the test suite:
