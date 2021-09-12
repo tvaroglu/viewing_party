@@ -7,7 +7,7 @@ module Services
     end
 
     def conn
-      request = Faraday.new(url: @endpoint) do |faraday|
+      Faraday.new(url: @endpoint) do |faraday|
         faraday.headers['Authorization'] = ENV['bearer']
       end.get(@endpoint)
     end
