@@ -19,9 +19,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def dashboard
-    @user = current_user
-  end
+  def dashboard; end
 
   def search
     found_user = User.find_by(email: params[:email].downcase)

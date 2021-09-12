@@ -1,19 +1,19 @@
-<% if !@user.email.nil? %>
-  <h1><%= "Welcome, #{@user.email}!" %></h1>
+<% if current_user %>
+  <h1><%= "Welcome, #{current_user.email}!" %></h1>
   <%= link_to "Discover Movies", discover_path, class: "btn btn-info btn-outline-dark" %>
   <br>
   <br>
-  <%= form_with url: dashboard_path(@user.id), local: true do |form| %>
+  <%= form_with url: dashboard_path(current_user.id), local: true do |form| %>
     <%= form.label :find_friends, 'Find Friends by Email:' %>
     <%= form.text_field :email, id: :email %>
     <%= form.submit 'Search', class: "btn btn-info btn-sm btn-outline-dark" %>
   <% end %>
   <br>
-  <% if !@user.friends? %>
+  <% if !current_user.friends? %>
     <h3>You Have No Followers</h3>
   <% else %>
     <h3>All Followers:</h3>
-    <% @user.followers.each do |follower| %>
+    <% current_user.followers.each do |follower| %>
       <div id="follower-<%= follower.id %>">
         <p><%= follower.email %></p>
       </div>
@@ -36,5 +36,5 @@
     </tbody>
   </table>
 <% else %>
-  <h1>Dashboard</h1>
+  <h3>Please Log In to View Your Dashboard</h3>
 <% end %>
