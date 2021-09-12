@@ -1,49 +1,53 @@
-<h1 id="title">Movie Details: <%= @movie[:title] %></h1>
-<%= button_to "Create Viewing Party", new_event_path, params: {movie_id: @movie[:id], movie_title: @movie[:title], runtime: @movie[:runtime]}, method: :get, class: "btn btn-info btn-outline-dark" %>
-<br>
-<h5 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h5>
-<h5 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h5>
-<h5 id="genres">Genres: <%= @movie[:genres] %></h5>
-<h6 id="overview">Overview: <%= @movie[:overview] %></h6>
-<br>
-<table class="table table-sm table-borderless table-responsive table align-top">
-  <thead>
-  </thead>
-  <tbody>
-     <tr align="center">
-       <td id="poster" style="width:50%;">
-         <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{@movie[:poster_path]}" %>" alt="Poster" style="height:27rem; width:auto; margin:auto; border-radius:10px;">
-       </td>
-        <td style="text-align:left; width:30%;">
-          <% if @cast && @cast.length > 0 %>
-          <h5>Top Cast:</h5>
-            <% @cast.each_with_index do |member, idx| %>
-              <h6 id="member" style="font-size:18px"><%= "#{idx + 1}.) #{member[:name]} as #{member[:character]}" %></h6>
+<% if current_user %>
+  <h1 id="title">Movie Details: <%= @movie[:title] %></h1>
+  <%= button_to "Create Viewing Party", new_event_path, params: {movie_id: @movie[:id], movie_title: @movie[:title], runtime: @movie[:runtime]}, method: :get, class: "btn btn-info btn-outline-dark" %>
+  <br>
+  <h5 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h5>
+  <h5 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h5>
+  <h5 id="genres">Genres: <%= @movie[:genres] %></h5>
+  <h6 id="overview">Overview: <%= @movie[:overview] %></h6>
+  <br>
+  <table class="table table-sm table-borderless table-responsive table align-top">
+    <thead>
+    </thead>
+    <tbody>
+       <tr align="center">
+         <td id="poster" style="width:50%;">
+           <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{@movie[:poster_path]}" %>" alt="Poster" style="height:27rem; width:auto; margin:auto; border-radius:10px;">
+         </td>
+          <td style="text-align:left; width:30%;">
+            <% if @cast && @cast.length > 0 %>
+            <h5>Top Cast:</h5>
+              <% @cast.each_with_index do |member, idx| %>
+                <h6 id="member" style="font-size:18px"><%= "#{idx + 1}.) #{member[:name]} as #{member[:character]}" %></h6>
+              <% end %>
             <% end %>
-          <% end %>
-        </td>
-     </tr>
-  </tbody>
-</table>
-<br>
-<% if @reviews && @reviews.length > 0 %>
-  <table class="table table-sm table-hover table-responsive table align-middle" style="border-radius:20px;">
-      <thead>
-        <tr>
-          <td>
-            <h5><%= @reviews.length %> Reviews</h5>
           </td>
-        </tr>
-      </thead>
-      <tbody>
-      <% @reviews.each do |review| %>
-        <tr id="review">
-          <td style="padding-top:25px;">
-            <h6>Author: <%= review[:author] %></h6>
-            <p><%= review[:content] %></p>
-          </td>
-        </tr>
-      <% end %>
+       </tr>
     </tbody>
   </table>
+  <br>
+  <% if @reviews && @reviews.length > 0 %>
+    <table class="table table-sm table-hover table-responsive table align-middle" style="border-radius:20px;">
+        <thead>
+          <tr>
+            <td>
+              <h5><%= @reviews.length %> Reviews</h5>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+        <% @reviews.each do |review| %>
+          <tr id="review">
+            <td style="padding-top:25px;">
+              <h6>Author: <%= review[:author] %></h6>
+              <p><%= review[:content] %></p>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% else %>
+  <h3>Please Log In to Search for Movies</h3>
 <% end %>

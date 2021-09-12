@@ -1,12 +1,16 @@
-<%= link_to "Top Rated", popular_path, class: "btn btn-info btn-outline-dark" %>
-<%= link_to "Upcoming", upcoming_path, class: "btn btn-info btn-outline-dark" %>
-<br>
-<br>
-<h1>Discover Movies</h1>
-<%= form_with url: discover_path, local: true do |form| %>
-  <%= form.label :find_movies, 'Find Movies:' %>
-  <%= form.text_field :search_criteria, id: :search_criteria %>
-  <%= form.submit 'Search', class: "btn btn-info btn-sm btn-outline-dark" %>
+<% if current_user %>
+  <%= link_to "Top Rated", popular_path, class: "btn btn-info btn-outline-dark" %>
+  <%= link_to "Upcoming", upcoming_path, class: "btn btn-info btn-outline-dark" %>
+  <br>
+  <br>
+  <h1>Discover Movies</h1>
+  <%= form_with url: discover_path, local: true do |form| %>
+    <%= form.label :find_movies, 'Find Movies:' %>
+    <%= form.text_field :search_criteria, id: :search_criteria %>
+    <%= form.submit 'Search', class: "btn btn-info btn-sm btn-outline-dark" %>
+  <% end %>
+  <br>
+  <%= render partial: 'results' %>
+<% else %>
+  <h3>Please Log In to Search for Movies</h3>
 <% end %>
-<br>
-<%= render partial: 'results' %>

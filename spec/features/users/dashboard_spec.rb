@@ -51,6 +51,13 @@ RSpec.describe 'user dashboard page' do
 
       expect(page).to have_content("#{@dane.email} is already following you!")
     end
+
+    it "can search for friends with a redirect back if the user searches for themself" do
+      fill_in :email, with: @admin.email
+      click_on 'Search'
+
+      expect(page).to have_content("You cannot follow yourself!")
+    end
   end
 
   describe 'friend search: sad path' do
