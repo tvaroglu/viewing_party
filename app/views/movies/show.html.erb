@@ -1,31 +1,30 @@
-<h1>Movie Details</h1>
+<h1 id="title">Movie Details: <%= @movie[:title] %></h1>
 <%= button_to "Create Viewing Party", new_event_path, params: {movie_id: @movie[:id], movie_title: @movie[:title], runtime: @movie[:runtime]}, method: :get, class: "btn btn-info btn-outline-dark" %>
 <br>
+<h5 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h5>
+<h5 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h5>
+<h5 id="genres">Genres: <%= @movie[:genres] %></h5>
+<h6 id="overview">Overview: <%= @movie[:overview] %></h6>
 <br>
-<table class="table table-sm table-borderless table-responsive table align-middle">
+<table class="table table-sm table-borderless table-responsive table align-top">
   <thead>
   </thead>
   <tbody>
-    <tr align="center">
-      <td style="width:20%; text-align:left;">
-        <h3 id="title"><%= @movie[:title] %></h3>
-        <h5 id="runtime">Runtime: <%= "#{@movie[:runtime].to_i / 60} hours #{@movie[:runtime].to_i % 60} minutes" %></h5>
-        <h5 id="vote_average">Vote Average: <%= @movie[:vote_average] %></h5>
-        <h5 id="genres">Genres: <%= @movie[:genres] %></h5>
-        <h6 id="overview">Overview: <%= @movie[:overview] %></h6>
-     </td>
-      <td id="poster" style="width:30%;">
-        <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{@movie[:poster_path]}" %>" alt="Poster" style="height:23rem; width:auto; margin:auto; border-radius:10px;">
-      </td>
-    </tr>
+     <tr align="center">
+       <td id="poster" style="width:50%;">
+         <img src="<%="#{@config_details[:secure_base_url]}#{@config_details[:poster_size]}#{@movie[:poster_path]}" %>" alt="Poster" style="height:27rem; width:auto; margin:auto; border-radius:10px;">
+       </td>
+        <td style="text-align:left; width:30%;">
+          <% if @cast && @cast.length > 0 %>
+          <h5>Top Cast:</h5>
+            <% @cast.each_with_index do |member, idx| %>
+              <h6 id="member" style="font-size:18px"><%= "#{idx + 1}.) #{member[:name]} as #{member[:character]}" %></h6>
+            <% end %>
+          <% end %>
+        </td>
+     </tr>
   </tbody>
 </table>
-<% if @cast && @cast.length > 0 %>
-<h5>Cast:</h5>
-  <% @cast.each do |member| %>
-    <h6 id="member"><%= "#{member[:name]} as #{member[:character]}" %></h6>
-  <% end %>
-<% end %>
 <br>
 <% if @reviews && @reviews.length > 0 %>
   <table class="table table-sm table-hover table-responsive table align-middle" style="border-radius:20px;">

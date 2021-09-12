@@ -1,12 +1,11 @@
 class SessionsController < ApplicationController
-  def new
-    session[:expires_at] = 10.minutes.from_now
-  end
+  def new; end
 
   def create
     found_user = User.find_by(email: params[:email].downcase)
     if !found_user.nil? && found_user.authenticate(params[:password])
       session[:user_id] = found_user.id
+      reset_session_expiration
       flash[:alert] = "Welcome, #{found_user.email}!"
       redirect_to dashboard_path(found_user.id)
     else
